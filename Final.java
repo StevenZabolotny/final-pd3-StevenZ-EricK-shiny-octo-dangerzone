@@ -5,6 +5,9 @@ import java.util.*;
 import java.awt.event.*;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 public class Final implements ActionListener {
     JPanel titlePanel, gamePanel, buttonPanel;
@@ -33,12 +36,30 @@ public class Final implements ActionListener {
 	titleLabel.setForeground(Color.red);
 	titlePanel.add(titleLabel);
 
-	gamePanel = new JPanel() {
-	    public void paintComponent(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillOval(100,100,18,18);
+	class gamePanel extends JPanel {
+	    public gamePanel() {
+		setOpaque(true);
+		setBackground(Color.GREEN);  
 	    }
-	    };
+	    public void paintComponent(Graphics g) {
+		/*
+		Graphics2D g2 = (Graphics2D) g;
+		Ellipse2D circle = new Ellipse2D.Double(100 - 18,100 -18,18,18);
+		g2.setColor(Color.BLUE);
+		g2.draw(circle);
+		Rectangle2D rect = new Rectangle2D.Double(100 - 18,100 -5,18,5);
+		g2.setColor(Color.WHITE);
+		g2.draw(rect); */
+		super.paintComponent(g);
+		g.setColor(Color.BLACK);
+		g.drawOval(100,100,19,19);
+		g.setColor(Color.BLUE);
+		g.fillOval(100,100,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(100 + 7,100,5,18);
+	    }
+	};
+	gamePanel = new gamePanel();
 	gamePanel.setLayout(null);
 	gamePanel.setLocation(400,250);
 	gamePanel.setSize(800,500);
