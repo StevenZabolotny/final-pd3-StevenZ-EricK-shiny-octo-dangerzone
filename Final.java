@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Final implements ActionListener {
-    Graphics g;
     JPanel titlePanel, gamePanel, buttonPanel;
     JLabel titleLabel, turnLabel, oneTypeLabel, twoTypeLabel;
     JButton newGameButton;
@@ -25,7 +24,7 @@ public class Final implements ActionListener {
 	titlePanel = new JPanel();
 	titlePanel.setLayout(null);
 	titlePanel.setLocation(10,0);
-	titlePanel.setSize(500,500);
+	titlePanel.setSize(500,100);
 	totalGUI.add(titlePanel);
 	titleLabel = new JLabel("8-ball Pool");
 	titleLabel.setLocation(250,0);
@@ -34,9 +33,14 @@ public class Final implements ActionListener {
 	titleLabel.setForeground(Color.red);
 	titlePanel.add(titleLabel);
 
-	gamePanel = new JPanel();
+	gamePanel = new JPanel() {
+	    public void paintComponent(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.fillOval(100,100,18,18);
+	    }
+	    };
 	gamePanel.setLayout(null);
-	gamePanel.setLocation(10,40);
+	gamePanel.setLocation(400,250);
 	gamePanel.setSize(800,500);
 	gamePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 	totalGUI.add(gamePanel);
@@ -60,9 +64,6 @@ public class Final implements ActionListener {
 	newGameButton = new JButton("New Game");
 	newGameButton.addActionListener(this);
 	buttonPanel.add(newGameButton);
-
-	g.setColor(Color.BLACK);
-	g.fillOval(100,100,18,18);
 	
 	return totalGUI;
     }
