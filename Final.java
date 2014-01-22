@@ -30,7 +30,7 @@ public class Final implements ActionListener {
 	titlePanel.setSize(500,100);
 	totalGUI.add(titlePanel);
 	titleLabel = new JLabel("8-ball Pool");
-	titleLabel.setLocation(250,0);
+	titleLabel.setLocation(25,10);
 	titleLabel.setSize(100,20);
 	titleLabel.setHorizontalAlignment(0);
 	titleLabel.setForeground(Color.red);
@@ -50,19 +50,45 @@ public class Final implements ActionListener {
 		Rectangle2D rect = new Rectangle2D.Double(100 - 18,100 -5,18,5);
 		g2.setColor(Color.WHITE);
 		g2.draw(rect); */
+
+		//the coordinates are relative to the top left of the table
 		super.paintComponent(g);
 		g.setColor(Color.BLACK);
-		g.drawOval(99,99,20,20);
+		g.drawOval(199,199,20,20);
 		g.setColor(Color.BLUE);
-		g.fillOval(100,100,18,18);
+		g.fillOval(200,200,18,18);
 		g.setColor(Color.WHITE);
-		g.fillRect(100 + 7,100,5,18);
+		g.fillRect(200 + 7,200,5,18);
+
+		g.setColor(Color.BLACK);
+		g.drawOval(199,219,20,20);
+		g.setColor(Color.BLUE);
+		g.fillOval(200,220,18,18);
+
+		g.setColor(Color.BLACK);
+		g.drawOval(199,239,20,20);
+		g.setColor(Color.BLUE);
+		g.fillOval(200,240,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(200 + 7,240,5,18);
+
+		g.setColor(Color.BLACK);		
+		g.drawOval(199,179,20,20);
+		g.setColor(Color.BLUE);
+		g.fillOval(200,180,18,18);
+
+		g.setColor(Color.BLACK);
+		g.drawOval(199,159,20,20);
+		g.setColor(Color.BLUE);
+		g.fillOval(200,160,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(200 + 7,160,5,18);
 	    }
 	};
 	gamePanel = new gamePanel();
 	gamePanel.setLayout(null);
-	gamePanel.setLocation(400,250);
-	gamePanel.setSize(800,500);
+	gamePanel.setLocation(200,250);
+	gamePanel.setSize(800,400); //this needs to be turned into 864x432 later
 	gamePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 	totalGUI.add(gamePanel);
 
