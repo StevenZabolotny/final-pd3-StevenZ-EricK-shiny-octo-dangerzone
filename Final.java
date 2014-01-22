@@ -39,7 +39,7 @@ public class Final implements ActionListener {
 	class gamePanel extends JPanel {
 	    public gamePanel() {
 		setOpaque(true);
-		setBackground(Color.GREEN);  
+		setBackground(Color.GREEN.darker().darker());  
 	    }
 	    public void paintComponent(Graphics g) {
 		/*
@@ -52,7 +52,7 @@ public class Final implements ActionListener {
 		g2.draw(rect); */
 		super.paintComponent(g);
 		g.setColor(Color.BLACK);
-		g.drawOval(100,100,19,19);
+		g.drawOval(99,99,20,20);
 		g.setColor(Color.BLUE);
 		g.fillOval(100,100,18,18);
 		g.setColor(Color.WHITE);
