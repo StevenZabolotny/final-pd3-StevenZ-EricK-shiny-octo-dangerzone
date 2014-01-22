@@ -52,17 +52,41 @@ public class Final implements ActionListener {
 		g2.draw(rect); */
 		super.paintComponent(g);
 		g.setColor(Color.BLACK);
-		g.drawOval(100,100,19,19);
+		g.drawOval(199,199,20,20);
 		g.setColor(Color.BLUE);
-		g.fillOval(100,100,18,18);
+		g.fillOval(200,200,18,18);
 		g.setColor(Color.WHITE);
-		g.fillRect(100 + 7,100,5,18);
+		g.fillRect(200 + 7,200,5,18);
+
+		g.setColor(Color.BLACK);
+		g.drawOval(200,220,19,19);
+		g.setColor(Color.BLUE);
+		g.fillOval(200,220,18,18);
+
+		g.setColor(Color.BLACK);
+		g.drawOval(200,240,19,19);
+		g.setColor(Color.BLUE);
+		g.fillOval(200,240,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(200 + 7,240,5,18);
+
+		g.setColor(Color.BLACK);
+		g.drawOval(200,180,19,19);
+		g.setColor(Color.BLUE);
+		g.fillOval(200,180,18,18);
+
+		g.setColor(Color.BLACK);
+		g.drawOval(200,160,19,19);
+		g.setColor(Color.BLUE);
+		g.fillOval(200,160,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(200 + 7,160,5,18);
 	    }
 	};
 	gamePanel = new gamePanel();
 	gamePanel.setLayout(null);
 	gamePanel.setLocation(400,250);
-	gamePanel.setSize(800,500);
+	gamePanel.setSize(800,400);
 	gamePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 	totalGUI.add(gamePanel);
 
