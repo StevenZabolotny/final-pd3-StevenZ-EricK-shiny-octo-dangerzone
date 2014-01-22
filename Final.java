@@ -3,8 +3,11 @@ import java.awt.*;
 import java.io.*;
 import java.util.*;
 import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 public class Final implements ActionListener {
+    Graphics g;
     JPanel titlePanel, gamePanel, buttonPanel;
     JLabel titleLabel, turnLabel, oneTypeLabel, twoTypeLabel;
     JButton newGameButton;
@@ -57,6 +60,9 @@ public class Final implements ActionListener {
 	newGameButton = new JButton("New Game");
 	newGameButton.addActionListener(this);
 	buttonPanel.add(newGameButton);
+
+	g.setColor(Color.BLACK);
+	g.fillOval(100,100,18,18);
 	
 	return totalGUI;
     }
