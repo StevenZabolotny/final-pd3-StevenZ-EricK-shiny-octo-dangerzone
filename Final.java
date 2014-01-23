@@ -71,19 +71,6 @@ public class Final implements ActionListener {
 	if(e.getSource() == newGameButton) {
 	    start = true;
 	}
-	if(start) {
-	    for (int time = 0;time != -1;time++) {
-		class stick extends gamePanel {
-		    public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			PointerInfo a = MouseInfo.getPointerInfo();
-			Point b = a.getLocation();
-			g.setColor(Color.ORANGE.darker().darker().darker().darker().darker());
-			g.fillRect((int)b.getX(),(int)b.getY(),5,18);
-		    }
-		};
-	    }
-	}
     }
 
     public static void createAndShowGUI() {
@@ -99,13 +86,34 @@ public class Final implements ActionListener {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-	SwingUtilities.invokeLater(new Runnable() {
-		public void run() {
-		    createAndShowGUI();
-		}
-	    });
-	    
+    public static void main (String[] args) {
+	try {
+	    Final obj = new Final ();
+	    obj.run (args);
+	}
+	catch (Exception e) {
+	    e.printStackTrace ();
+	}
+    }
+
+
+    public void run (String[] args) throws Exception {
+	createAndShowGUI();
+	for (int time = 0;time != -1;time++) {
+	    if (start) {
+		class stick extends gamePanel {
+		    public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			PointerInfo a = MouseInfo.getPointerInfo();
+			Point b = a.getLocation();
+			g.setColor(Color.ORANGE.darker().darker().darker().darker().darker());
+			g.fillRect((int)b.getX(),(int)b.getY(),5,18);
+		    }
+		};
+		stick s = new stick();
+		System.out.println("Got this far");
+	    }
+	}   
     }
 }
 	    
