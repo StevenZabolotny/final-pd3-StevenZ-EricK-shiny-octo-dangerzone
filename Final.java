@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.MouseInfo;
+import java.awt.PointerInfo;
 
 public class Final implements ActionListener {
     JPanel titlePanel, gamePanel, buttonPanel;
@@ -68,10 +70,26 @@ public class Final implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-	if(e.getSource() == newGameButton) {
-	    start = true;
-	}
+	start = true;
     }
+
+    public void start() {
+	for (int time = 0;time != -1;time++) {
+	    class stick extends gamePanel {
+		public void paintComponent(Graphics g) {
+		    super.paintComponent(g); 
+		    PointerInfo a = MouseInfo.getPointerInfo();
+		    Point b = a.getLocation();
+		    g.setColor(Color.ORANGE.darker().darker().darker().darker().darker());
+		    g.fillRect((int)b.getX(),(int)b.getY(),5,18);
+		}
+	    };
+	    stick s = new stick();
+	    /* System.out.println("Got this far");
+	    System.out.println("Loop: " + time);
+	    System.out.println("Start: " + start); */
+	}
+    }	
 
     public static void createAndShowGUI() {
 	JFrame.setDefaultLookAndFeelDecorated(true);
@@ -99,21 +117,8 @@ public class Final implements ActionListener {
 
     public void run (String[] args) throws Exception {
 	createAndShowGUI();
-	for (int time = 0;time != -1;time++) {
-	    if (start) {
-		class stick extends gamePanel {
-		    public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			PointerInfo a = MouseInfo.getPointerInfo();
-			Point b = a.getLocation();
-			g.setColor(Color.ORANGE.darker().darker().darker().darker().darker());
-			g.fillRect((int)b.getX(),(int)b.getY(),5,18);
-		    }
-		};
-		stick s = new stick();
-		System.out.println("Got this far");
-	    }
-	}   
+	start();
     }
 }
+
 	    
