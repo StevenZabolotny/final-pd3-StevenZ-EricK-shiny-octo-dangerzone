@@ -31,16 +31,167 @@ public class Final implements ActionListener {
 	titlePanel.setSize(500,100);
 	totalGUI.add(titlePanel);
 	titleLabel = new JLabel("8-ball Pool");
-	titleLabel.setLocation(250,0);
+	titleLabel.setLocation(25,10);
 	titleLabel.setSize(100,20);
 	titleLabel.setHorizontalAlignment(0);
 	titleLabel.setForeground(Color.red);
 	titlePanel.add(titleLabel);
 
+<<<<<<< HEAD
+=======
+	class gamePanel extends JPanel {
+	    public gamePanel() {
+		setOpaque(true);
+		setBackground(Color.GREEN.darker().darker());  
+	    }
+	    public void paintComponent(Graphics g) {
+		/*
+		Graphics2D g2 = (Graphics2D) g;
+		Ellipse2D circle = new Ellipse2D.Double(100 - 18,100 -18,18,18);
+		g2.setColor(Color.BLUE);
+		g2.draw(circle);
+		Rectangle2D rect = new Rectangle2D.Double(100 - 18,100 -5,18,5);
+		g2.setColor(Color.WHITE);
+		g2.draw(rect); */
+
+		//the coordinates are relative to the top left of the table
+		super.paintComponent(g);
+
+		//column 1
+		//1
+		g.setColor(Color.BLACK);
+		g.drawOval(624,206,20,20);
+		g.setColor(Color.YELLOW);
+		g.fillOval(625,207,18,18);
+
+		//column 2
+		//14
+		g.setColor(Color.BLACK);		
+		g.drawOval(644,196,20,20);
+		g.setColor(Color.GREEN);
+		g.fillOval(645,197,18,18);
+		
+		//4
+		g.setColor(Color.BLACK);
+		g.drawOval(644,216,20,20);
+		g.setColor(Color.MAGENTA);
+		g.fillOval(645,217,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(645 + 7,217,5,18);
+
+		//column 3
+		//5
+		g.setColor(Color.BLACK);
+		g.drawOval(664,186,20,20);
+		g.setColor(Color.ORANGE.darker());
+		g.fillOval(665,187,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(665 + 7,187,5,18);
+
+		//8
+		g.setColor(Color.BLACK);
+		g.drawOval(664,206,20,20);
+		g.setColor(Color.BLACK);
+		g.fillOval(665,207,18,18);
+
+		//13
+		g.setColor(Color.BLACK);
+		g.drawOval(664,226,20,20);
+		g.setColor(Color.ORANGE.darker());
+		g.fillOval(665,227,18,18);
+		
+		//column 4
+		//11
+		g.setColor(Color.BLACK);
+		g.drawOval(684,176,20,20);
+		g.setColor(Color.RED);
+		g.fillOval(685,177,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(685 + 7,177,5,18);
+
+		//2
+		g.setColor(Color.BLACK);		
+		g.drawOval(684,196,20,20);
+		g.setColor(Color.BLUE);
+		g.fillOval(685,197,18,18);
+
+		//12
+		g.setColor(Color.BLACK);		
+		g.drawOval(684,216,20,20);
+		g.setColor(Color.MAGENTA);
+		g.fillOval(685,217,18,18);
+		
+		//9 (looks suspiciously like solid yellow)
+		g.setColor(Color.BLACK);
+		g.drawOval(684,236,20,20);
+		g.setColor(Color.YELLOW);
+		g.fillOval(685,237,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(685 + 7,237,5,18);
+
+		//column 5
+		//7
+		g.setColor(Color.BLACK);		
+		g.drawOval(704,166,20,20);
+		g.setColor(Color.ORANGE.darker().darker().darker().darker());
+		g.fillOval(705,167,18,18);
+		
+		//10
+		g.setColor(Color.BLACK);
+		g.drawOval(704,186,20,20);
+		g.setColor(Color.BLUE);
+		g.fillOval(705,187,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(705 + 7,187,5,18);
+
+		//15
+		g.setColor(Color.BLACK);
+		g.drawOval(704,206,20,20);
+		g.setColor(Color.ORANGE.darker().darker().darker().darker());
+		g.fillOval(705,207,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(705 + 7,207,5,18);
+
+		//3
+		g.setColor(Color.BLACK);
+		g.drawOval(704,226,20,20);
+		g.setColor(Color.RED);
+		g.fillOval(705,227,18,18);
+
+		//6
+		g.setColor(Color.BLACK);
+		g.drawOval(704,246,20,20);
+		g.setColor(Color.GREEN);
+		g.fillOval(705,247,18,18);
+		g.setColor(Color.WHITE);
+		g.fillRect(705 + 7,247,5,18);
+
+		//the almighty cue ball
+		g.setColor(Color.BLACK);
+		g.drawOval(304,206,20,20);
+		g.setColor(Color.WHITE);
+		g.fillOval(305,207,18,18);
+		
+		
+		/*
+		  Graphics2D g2d = (Graphics2D)g;
+		g2d.setColor(Color.WHITE);
+		Rectangle rect2 = new Rectangle(0,0,6,8);
+		g2d.rotate(Math.toRadians(45));
+		g2d.draw(rect2);
+		g2d.fill(rect2);
+		g2d.translate(350,450);
+		*/
+		
+
+
+	    }
+	};
+>>>>>>> 30f122508887d3a112691389520470ee53483cf6
 	gamePanel = new gamePanel();
 	gamePanel.setLayout(null);
-	gamePanel.setLocation(400,250);
-	gamePanel.setSize(800,400);
+	gamePanel.setLocation(200,250);
+	gamePanel.setSize(864,432); //this needs to be turned into 864x432 later
 	gamePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 	totalGUI.add(gamePanel);
 
