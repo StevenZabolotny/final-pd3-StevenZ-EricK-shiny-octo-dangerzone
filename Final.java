@@ -13,8 +13,9 @@ public class Final implements ActionListener {
     JPanel titlePanel, gamePanel, buttonPanel;
     JLabel titleLabel, turnLabel, oneTypeLabel, twoTypeLabel;
     JButton newGameButton;
-    int turn;
+    int turn,time;
     String oneType,twoType;
+    boolean start = false;
 
     public JPanel createContentPane() {
 	turn = 0;
@@ -36,53 +37,6 @@ public class Final implements ActionListener {
 	titleLabel.setForeground(Color.red);
 	titlePanel.add(titleLabel);
 
-	class gamePanel extends JPanel {
-	    public gamePanel() {
-		setOpaque(true);
-		setBackground(Color.GREEN);  
-	    }
-	    public void paintComponent(Graphics g) {
-		/*
-		Graphics2D g2 = (Graphics2D) g;
-		Ellipse2D circle = new Ellipse2D.Double(100 - 18,100 -18,18,18);
-		g2.setColor(Color.BLUE);
-		g2.draw(circle);
-		Rectangle2D rect = new Rectangle2D.Double(100 - 18,100 -5,18,5);
-		g2.setColor(Color.WHITE);
-		g2.draw(rect); */
-		super.paintComponent(g);
-		g.setColor(Color.BLACK);
-		g.drawOval(199,199,20,20);
-		g.setColor(Color.BLUE);
-		g.fillOval(200,200,18,18);
-		g.setColor(Color.WHITE);
-		g.fillRect(200 + 7,200,5,18);
-
-		g.setColor(Color.BLACK);
-		g.drawOval(200,220,19,19);
-		g.setColor(Color.BLUE);
-		g.fillOval(200,220,18,18);
-
-		g.setColor(Color.BLACK);
-		g.drawOval(200,240,19,19);
-		g.setColor(Color.BLUE);
-		g.fillOval(200,240,18,18);
-		g.setColor(Color.WHITE);
-		g.fillRect(200 + 7,240,5,18);
-
-		g.setColor(Color.BLACK);
-		g.drawOval(200,180,19,19);
-		g.setColor(Color.BLUE);
-		g.fillOval(200,180,18,18);
-
-		g.setColor(Color.BLACK);
-		g.drawOval(200,160,19,19);
-		g.setColor(Color.BLUE);
-		g.fillOval(200,160,18,18);
-		g.setColor(Color.WHITE);
-		g.fillRect(200 + 7,160,5,18);
-	    }
-	};
 	gamePanel = new gamePanel();
 	gamePanel.setLayout(null);
 	gamePanel.setLocation(400,250);
@@ -115,6 +69,20 @@ public class Final implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 	if(e.getSource() == newGameButton) {
+	    start = true;
+	}
+	if(start) {
+	    for (int time = 0;time != -1;time++) {
+		class stick extends gamePanel {
+		    public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			PointerInfo a = MouseInfo.getPointerInfo();
+			Point b = a.getLocation();
+			g.setColor(Color.ORANGE.darker().darker().darker().darker().darker());
+			g.fillRect((int)b.getX(),(int)b.getY(),5,18);
+		    }
+		};
+	    }
 	}
     }
 
@@ -137,6 +105,7 @@ public class Final implements ActionListener {
 		    createAndShowGUI();
 		}
 	    });
+	    
     }
 }
 	    
