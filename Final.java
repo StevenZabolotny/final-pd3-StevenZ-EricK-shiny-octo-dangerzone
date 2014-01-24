@@ -12,12 +12,13 @@ import java.awt.MouseInfo;
 import java.awt.PointerInfo;
 
 public class Final implements ActionListener {
-    JPanel titlePanel, gamePanel, buttonPanel;
+    JPanel titlePanel,  buttonPanel;
     JLabel titleLabel, turnLabel, oneTypeLabel, twoTypeLabel;
     JButton newGameButton;
     int turn,time;
     String oneType,twoType;
     boolean start = false;
+    JPanel gamePanel = new gamePanel();
 
     public JPanel createContentPane() {
 	turn = 0;
@@ -39,7 +40,6 @@ public class Final implements ActionListener {
 	titleLabel.setForeground(Color.red);
 	titlePanel.add(titleLabel);
 
-	gamePanel = new gamePanel();
 	gamePanel.setLayout(null);
 	gamePanel.setLocation(200,250);
 	gamePanel.setSize(864,432); //this needs to be turned into 864x432 later
@@ -75,16 +75,10 @@ public class Final implements ActionListener {
 
     public void start() {
 	for (int time = 0;time != -1;time++) {
-	    class stick extends gamePanel {
-		public void paintComponent(Graphics g) {
-		    super.paintComponent(g); 
-		    PointerInfo a = MouseInfo.getPointerInfo();
-		    Point b = a.getLocation();
-		    g.setColor(Color.ORANGE.darker().darker().darker().darker().darker());
-		    g.fillRect((int)b.getX(),(int)b.getY(),5,18);
-		}
-	    };
-	    stick s = new stick();
+	    if (time % 1000 == 0) {
+		stick s = new stick();
+		gamePanel.repaint();
+	    }
 	    /* System.out.println("Got this far");
 	    System.out.println("Loop: " + time);
 	    System.out.println("Start: " + start); */
