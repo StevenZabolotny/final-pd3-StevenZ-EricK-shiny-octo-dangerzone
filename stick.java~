@@ -1,0 +1,9 @@
+public class stick extends gamePanel {
+    public void paintComponent(Graphics g) {
+	super.paintComponent(g); 
+	PointerInfo a = MouseInfo.getPointerInfo();
+	Point b = a.getLocation();
+	g.setColor(Color.ORANGE.darker().darker().darker().darker().darker());
+	g.fillRect((int)b.getX(),(int)b.getY(),5,18);
+    }
+};
