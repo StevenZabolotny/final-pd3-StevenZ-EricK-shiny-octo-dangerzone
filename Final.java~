@@ -1,12 +1,24 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.util.*;
+import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.MouseInfo;
+import java.awt.PointerInfo;
 
 public class Final implements ActionListener {
-    JPanel titlePanel, gamePanel, buttonPanel;
+    JPanel titlePanel,  buttonPanel;
     JLabel titleLabel, turnLabel, oneTypeLabel, twoTypeLabel;
     JButton newGameButton;
-    int turn;
+    int turn,time;
     String oneType,twoType;
+    boolean start = false;
+    JPanel gamePanel = new gamePanel();
 
     public JPanel createContentPane() {
 	turn = 0;
@@ -19,26 +31,25 @@ public class Final implements ActionListener {
 	titlePanel = new JPanel();
 	titlePanel.setLayout(null);
 	titlePanel.setLocation(10,0);
-	titlePanel.setSize(250,30);
+	titlePanel.setSize(500,100);
 	totalGUI.add(titlePanel);
 	titleLabel = new JLabel("8-ball Pool");
-	titleLabel.setLocation(0,0);
-	titleLabel.setSize(120,30);
+	titleLabel.setLocation(25,10);
+	titleLabel.setSize(100,20);
 	titleLabel.setHorizontalAlignment(0);
 	titleLabel.setForeground(Color.red);
 	titlePanel.add(titleLabel);
 
-	gamePanel = new JPanel();
 	gamePanel.setLayout(null);
-	gamePanel.setLocation(10,40);
-	gamePanel.setSize(500,1000);
-	gamePanel.setBorder(500,1000);
+	gamePanel.setLocation(200,250);
+	gamePanel.setSize(864,432); //this needs to be turned into 864x432 later
+	gamePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 	totalGUI.add(gamePanel);
 
 	buttonPanel = new JPanel();
 	buttonPanel.setLayout(new FlowLayout());
-	buttonPanel.setLocation(10,1040);
-	buttonPanel.setSize(20,200);
+	buttonPanel.setLocation(900,40);
+	buttonPanel.setSize(200,40);
 	totalGUI.add(buttonPanel);
 	turnLabel = new JLabel("" + turn);
 	turnLabel.setHorizontalAlignment(0);
@@ -54,12 +65,25 @@ public class Final implements ActionListener {
 	newGameButton = new JButton("New Game");
 	newGameButton.addActionListener(this);
 	buttonPanel.add(newGameButton);
+	
+	return totalGUI;
     }
 
     public void actionPerformed(ActionEvent e) {
-	if(e.getSource() == newGameButton) {
-	}
+	start = true;
     }
+
+    public void start() {
+	for (int time = 0;time != -1;time++) {
+	    if (time % 1000 == 0) {
+		stick s = new stick();
+		gamePanel.repaint();
+	    }
+	    /* System.out.println("Got this far");
+	    System.out.println("Loop: " + time);
+	    System.out.println("Start: " + start); */
+	}
+    }	
 
     public static void createAndShowGUI() {
 	JFrame.setDefaultLookAndFeelDecorated(true);
@@ -74,12 +98,21 @@ public class Final implements ActionListener {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-	SwingUtilities.invokeLater(new Runnable() {
-		public void run() {
-		    createAndShowGUI();
-		}
-	    });
+    public static void main (String[] args) {
+	try {
+	    Final obj = new Final ();
+	    obj.run (args);
+	}
+	catch (Exception e) {
+	    e.printStackTrace ();
+	}
+    }
+
+
+    public void run (String[] args) throws Exception {
+	createAndShowGUI();
+	start();
     }
 }
+
 	    

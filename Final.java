@@ -10,6 +10,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.MouseInfo;
 import java.awt.PointerInfo;
+import java.lang.reflect.*;
+import javax.imageio.*;
 
 public class Final implements ActionListener {
     JPanel titlePanel,  buttonPanel;
@@ -66,24 +68,29 @@ public class Final implements ActionListener {
 	newGameButton.addActionListener(this);
 	buttonPanel.add(newGameButton);
 	
+	stick s = new stick();
+	
 	return totalGUI;
     }
 
     public void actionPerformed(ActionEvent e) {
 	start = true;
     }
-
-    public void start() {
+    /*
+    public void start() throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException{
 	for (int time = 0;time != -1;time++) {
 	    if (time % 1000 == 0) {
 		stick s = new stick();
-		gamePanel.repaint();
+		java.lang.reflect.Method m;
+		m = s.getClass().getMethod("repaint");
+		Object obj = m.invoke(gamePanel);
+		gamePanel.update(gamePanel.getGraphics());
 	    }
-	    /* System.out.println("Got this far");
+	    System.out.println("Got this far");
 	    System.out.println("Loop: " + time);
-	    System.out.println("Start: " + start); */
+	    System.out.println("Start: " + start);
 	}
-    }	
+   }	*/
 
     public static void createAndShowGUI() {
 	JFrame.setDefaultLookAndFeelDecorated(true);
@@ -111,7 +118,6 @@ public class Final implements ActionListener {
 
     public void run (String[] args) throws Exception {
 	createAndShowGUI();
-	start();
     }
 }
 
