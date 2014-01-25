@@ -8,14 +8,27 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.MouseInfo;
+import java.awt.PointerInfo;
 
 public class gamePanel extends JPanel {
+    int x = 0;
+    int y = 0;
     ArrayList<Ball> balls = new ArrayList<Ball>();
 
     public gamePanel() {
 	setOpaque(true);
 	setBackground(Color.GREEN);
 	makeBalls();
+	addMouseMotionListener(new MouseMotionAdapter() {
+	    @Override
+	    public void mouseMoved(MouseEvent e) {
+		Point p = e.getPoint();
+		x = (int)p.getX();
+		y = (int)p.getY();
+		repaint();
+	    }
+	});
     }
 
     public void makeBalls() {
@@ -183,5 +196,7 @@ public class gamePanel extends JPanel {
 	for (Ball ball: balls) {
 	    ball.drawBall(g);
 	}
+	g.setColor(Color.ORANGE.darker().darker().darker().darker().darker());
+	g.fillRect(x,y,5,100);
     }
 }	
