@@ -62,6 +62,9 @@ public class Final2 implements ActionListener {
 	newGameButton = new JButton("New Game");
 	newGameButton.addActionListener(this);
 	buttonPanel.add(newGameButton);
+
+	//	Stick s = new Stick();
+	//gamePanel.add(s);
 	
 	return totalGUI;
     }
@@ -76,9 +79,9 @@ public class Final2 implements ActionListener {
         JFrame frame = new JFrame("8-ball Pool!");
 
         //Create and set up the content pane.
-        Final gui = new Final();
-        frame.setContentPane(gui.createContentPane());
-
+	//Final2 gui = new Final2();
+        //frame.setContentPane(gui.createContentPane());
+	frame.add(new Stick());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 1500);
         frame.setVisible(true);
