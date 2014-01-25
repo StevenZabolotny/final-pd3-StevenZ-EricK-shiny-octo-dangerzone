@@ -18,6 +18,13 @@ public class Ball {
 	radius = 9;
     }
 
+    public double getX() {
+	return (double)xcor;
+    }
+    public double getY() {
+	return (double)ycor;
+    }
+
     public void drawBall(Graphics g) {
 	boolean isStriped = (num > 8);
 	int color = num%8;
