@@ -32,166 +32,48 @@ public class gamePanel extends JPanel {
     }
 
     public void makeBalls() {
-	Ball ball1 = new Ball(1,624,206);
-	balls.add(ball1);
-	//this.update(this.getGraphics()); this breaks everything yay
+	//1 and 9 are yellow (255,215,0)
+	//2 and 10 are blue (0,0,238)
+	//3 and 11 are red (205,0,0)
+	//4 and 12 are purple (85,26,139)
+	//5 and 13 are orange (255,127,0)
+	//6 and 14 are green (34,139,34)
+	//7 and 15 are brown (138,51,36)
+	//8 is black (0,0,0)
+	//0 aka cue is white (245,245,245)
 
-	//column 2
-	//6
-	Ball ball6 = new Ball(6,644,196);
-	balls.add(ball6);
-	//12
-	Ball ball12 = new Ball(12,644,216);
-	balls.add(ball12);
+	//column 1: 1
+	balls.add(new Ball(625,207,1,255,215,0,false));
 
-	//column 3
-	//13
-	Ball ball13 = new Ball(13,664,186);
-	balls.add(ball13);
-	//8
-	Ball ball8 = new Ball(8,664,206);
-	balls.add(ball8);
-	//5
-	Ball ball5 = new Ball(5,664,226);
-	balls.add(ball5);
+	//column 2: 6,12
+	balls.add(new Ball(643,198,6,34,139,34,false));
+	balls.add(new Ball(643,216,12,85,26,139,true));
 
-	//column 4
-	//11
-	Ball ball11 = new Ball(11,684,176);
-	balls.add(ball11);
-	//2
-	Ball ball2 = new Ball(2,684,196);
-	balls.add(ball2);
-	//4
-	Ball ball4 = new Ball(4,684,216);
-	balls.add(ball4);
+	//column 3: 13,8,5
+	balls.add(new Ball(661,189,13,255,127,0,true));
+	balls.add(new Ball(661,207,8,0,0,0,false));
+	balls.add(new Ball(661,225,5,255,127,0,false));
+
+	//column 4: 11,2,4,9
+	balls.add(new Ball(679,180,11,205,0,0,true));
+	balls.add(new Ball(679,198,2,0,0,238,false));
+	balls.add(new Ball(679,216,4,85,26,139,false));
+	balls.add(new Ball(679,234,9,255,215,0,true));
+
+	//column 5: 7,10,15,3,14
+	balls.add(new Ball(697,171,7,138,51,3,false));
+	balls.add(new Ball(697,189,10,0,0,238,true));
+	balls.add(new Ball(697,207,15,138,51,3,true));
+	balls.add(new Ball(697,225,3,205,0,0,false));
+	balls.add(new Ball(697,243,14,34,139,34,true));
+
+	//cue ball
+	balls.add(new Ball(305,207,0,245,245,245,false));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-	/*
-	Graphics2D g2 = (Graphics2D) g;
-	Ellipse2D circle = new Ellipse2D.Double(100 - 18,100 -18,18,18);
-	g2.setColor(Color.BLUE);
-	g2.draw(circle);
-	Rectangle2D rect = new Rectangle2D.Double(100 - 18,100 -5,18,5);
-	g2.setColor(Color.WHITE);
-	g2.draw(rect); */
 	super.paintComponent(g);
-	//column 1
-	//1
-	/*g.setColor(Color.BLACK);
-	g.drawOval(624,206,20,20);
-	g.setColor(Color.YELLOW);
-	g.fillOval(625,207,18,18);
-
-	//column 2
-	//14
-	g.setColor(Color.BLACK);		
-	g.drawOval(644,196,20,20);
-	g.setColor(Color.GREEN);
-	g.fillOval(645,197,18,18);
-
-	//4
-	g.setColor(Color.BLACK);
-	g.drawOval(644,216,20,20);
-	g.setColor(Color.MAGENTA);
-	g.fillOval(645,217,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(645 + 7,217,5,18);
-
-	//column 3
-	//5
-	g.setColor(Color.BLACK);
-	g.drawOval(664,186,20,20);
-	g.setColor(Color.ORANGE.darker());
-	g.fillOval(665,187,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(665 + 7,187,5,18);
-
-	//8
-	g.setColor(Color.BLACK);
-	g.drawOval(664,206,20,20);
-	g.setColor(Color.BLACK);
-	g.fillOval(665,207,18,18);
-
-	//13
-	g.setColor(Color.BLACK);
-	g.drawOval(664,226,20,20);
-	g.setColor(Color.ORANGE.darker());
-	g.fillOval(665,227,18,18);
-
-	//column 4
-	//11
-	g.setColor(Color.BLACK);
-	g.drawOval(684,176,20,20);
-	g.setColor(Color.RED);
-	g.fillOval(685,177,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(685 + 7,177,5,18);
-
-	//2
-	g.setColor(Color.BLACK);		
-	g.drawOval(684,196,20,20);
-	g.setColor(Color.BLUE);
-	g.fillOval(685,197,18,18);
-
-	//12
-	g.setColor(Color.BLACK);		
-	g.drawOval(684,216,20,20);
-	g.setColor(Color.MAGENTA);
-	g.fillOval(685,217,18,18);
-
-	//9 (looks suspiciously like solid yellow)
-	g.setColor(Color.BLACK);
-	g.drawOval(684,236,20,20);
-	g.setColor(Color.YELLOW);
-	g.fillOval(685,237,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(685 + 7,237,5,18);
-
-	//column 5
-	//7
-	g.setColor(Color.BLACK);		
-	g.drawOval(704,166,20,20);
-	g.setColor(Color.ORANGE.darker().darker().darker().darker());
-	g.fillOval(705,167,18,18);
-
-	//10
-	g.setColor(Color.BLACK);
-	g.drawOval(704,186,20,20);
-	g.setColor(Color.BLUE);
-	g.fillOval(705,187,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(705 + 7,187,5,18);
-
-	//15
-	g.setColor(Color.BLACK);
-	g.drawOval(704,206,20,20);
-	g.setColor(Color.ORANGE.darker().darker().darker().darker());
-	g.fillOval(705,207,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(705 + 7,207,5,18);
-
-	//3
-	g.setColor(Color.BLACK);
-	g.drawOval(704,226,20,20);
-	g.setColor(Color.RED);
-	g.fillOval(705,227,18,18);
-
-	//6
-	g.setColor(Color.BLACK);
-	g.drawOval(704,246,20,20);
-	g.setColor(Color.GREEN);
-	g.fillOval(705,247,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(705 + 7,247,5,18);
-
-	//the almighty cue ball
-	g.setColor(Color.BLACK);
-	g.drawOval(304,206,20,20);
-	g.setColor(Color.WHITE);
-	g.fillOval(305,207,18,18);*/
 
 	for (Ball ball: balls) {
 	    ball.drawBall(g);
