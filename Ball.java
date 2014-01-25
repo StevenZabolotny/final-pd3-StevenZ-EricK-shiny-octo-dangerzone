@@ -25,10 +25,10 @@ public class Ball {
     }
 
     public double getX() {
-	return (double)xcor;
+	return (double)x;
     }
     public double getY() {
-	return (double)ycor;
+	return (double)y;
     }
 
     public void drawBall(Graphics g) {

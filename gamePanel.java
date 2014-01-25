@@ -31,50 +31,64 @@ public class gamePanel extends JPanel {
 	});
     }
 
+    /*
     public double angletoCue() {
 	Ball cue = balls.get(0);
 	double hyp = Math.pow(Math.pow(cue.getX() - x,2) + Math.pow(cue.getY() - y,2),0.5);
 	double side1 = cue.getX() - x;
+	if (side1 < 0)
+	    side1 = side1 * -1;
 	double side2 = cue.getY() - y;
+	if (side2 < 0)
+	    side2 = side2 * -1;
 	//the angle between side1 and hyp is referred to as C.
 	double C = Math.acos((Math.pow(hyp,2) + Math.pow(side1,2) - Math.pow(side2,2)) / (2 * hyp * side1));
+	if (cue.getY() > y)
+	    C = -C;;
+	if (cue.getX() > x)
+	    C = C + Math.PI;
 	return C;
     }
+    */
 
-    public void makeBalls() {
-	Ball ball1 = new Ball(1,624,206);
-	balls.add(ball1);
-	//this.update(this.getGraphics()); this breaks everything yay
+public void makeBalls() {
+	//1 and 9 are yellow (255,215,0)
+	//2 and 10 are blue (0,0,238)
+	//3 and 11 are red (205,0,0)
+	//4 and 12 are purple (85,26,139)
+	//5 and 13 are orange (255,127,0)
+	//6 and 14 are green (34,139,34)
+	//7 and 15 are brown (138,51,36)
+	//8 is black (0,0,0)
+	//0 aka cue is white (245,245,245)
 
-	//column 2
-	//6
-	Ball ball6 = new Ball(6,644,196);
-	balls.add(ball6);
-	//12
-	Ball ball12 = new Ball(12,644,216);
-	balls.add(ball12);
+	//cue ball
+	balls.add(new Ball(305,207,0,245,245,245,false));
 
-	//column 3
-	//13
-	Ball ball13 = new Ball(13,664,186);
-	balls.add(ball13);
-	//8
-	Ball ball8 = new Ball(8,664,206);
-	balls.add(ball8);
-	//5
-	Ball ball5 = new Ball(5,664,226);
-	balls.add(ball5);
+	//column 1: 1
+	balls.add(new Ball(625,207,1,255,215,0,false));
 
-	//column 4
-	//11
-	Ball ball11 = new Ball(11,684,176);
-	balls.add(ball11);
-	//2
-	Ball ball2 = new Ball(2,684,196);
-	balls.add(ball2);
-	//4
-	Ball ball4 = new Ball(4,684,216);
-	balls.add(ball4);
+	//column 2: 6,12
+	balls.add(new Ball(643,198,6,34,139,34,false));
+	balls.add(new Ball(643,216,12,85,26,139,true));
+
+	//column 3: 13,8,5
+	balls.add(new Ball(661,189,13,255,127,0,true));
+	balls.add(new Ball(661,207,8,0,0,0,false));
+	balls.add(new Ball(661,225,5,255,127,0,false));
+
+	//column 4: 11,2,4,9
+	balls.add(new Ball(679,180,11,205,0,0,true));
+	balls.add(new Ball(679,198,2,0,0,238,false));
+	balls.add(new Ball(679,216,4,85,26,139,false));
+	balls.add(new Ball(679,234,9,255,215,0,true));
+
+	//column 5: 7,10,15,3,14
+	balls.add(new Ball(697,171,7,138,51,3,false));
+	balls.add(new Ball(697,189,10,0,0,238,true));
+	balls.add(new Ball(697,207,15,138,51,3,true));
+	balls.add(new Ball(697,225,3,205,0,0,false));
+	balls.add(new Ball(697,243,14,34,139,34,true));
     }
 
     @Override
@@ -92,11 +106,17 @@ public class gamePanel extends JPanel {
 	for (Ball ball: balls) {
 	    ball.drawBall(g);
 	}
+	g.setColor(Color.ORANGE.darker().darker().darker().darker());
+	g.fillRect(x - 3,y - 100,6,100);
+	/*
 	g2d.setPaint(Color.ORANGE.darker().darker().darker().darker().darker());
-	g2d.rotate(angletoCue(),x/2,y/2);
-	g2d.drawRect(x-3,y-100,3,100);
-	g2d.fillRect(x-3,y-100,3,100);
-
+	g2d.translate(this.getWidth() / 2, this.getHeight());
+	g2d.rotate(angletoCue());
+	g2d.translate(-this.getWidth() / 2, -this.getHeight());
+	//g2d.rotate(angletoCue(),balls.get(0).getX(),balls.get(0).getY());
+	g2d.drawRect(x - 3,y - 100,6,100);
+	g2d.fillRect(x - 3,y - 100,6,100);
+	*/
 	/*
 	Graphics2D g2 = (Graphics2D) g;
 	Ellipse2D circle = new Ellipse2D.Double(100 - 18,100 -18,18,18);

@@ -31,6 +31,16 @@ public class gamePanel extends JPanel {
 	});
     }
 
+    public double angletoCue() {
+	Ball cue = balls.get(0);
+	double hyp = Math.pow(Math.pow(cue.getX() - x,2) + Math.pow(cue.getY() - y,2),0.5);
+	double side1 = cue.getX() - x;
+	double side2 = cue.getY() - y;
+	//the angle between side1 and hyp is referred to as C.
+	double C = Math.acos((Math.pow(hyp,2) + Math.pow(side1,2) - Math.pow(side2,2)) / (2 * hyp * side1));
+	return C;
+    }
+
     public void makeBalls() {
 	Ball ball1 = new Ball(1,624,206);
 	balls.add(ball1);
@@ -69,6 +79,24 @@ public class gamePanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+	super.paintComponent(g);
+	Graphics2D g2d = (Graphics2D) g;
+	g.setColor(Color.BLACK);
+	g.fillRect(0,0,864,20);
+	g.setColor(Color.BLACK);
+	g.fillRect(0,0,20,432);
+	g.setColor(Color.BLACK);
+	g.fillRect(0,412,864,20);
+	g.setColor(Color.BLACK);
+	g.fillRect(844,0,20,432);
+	for (Ball ball: balls) {
+	    ball.drawBall(g);
+	}
+	g2d.setPaint(Color.ORANGE.darker().darker().darker().darker().darker());
+	g2d.rotate(angletoCue(),x/2,y/2);
+	g2d.drawRect(x-3,y-100,3,100);
+	g2d.fillRect(x-3,y-100,3,100);
+
 	/*
 	Graphics2D g2 = (Graphics2D) g;
 	Ellipse2D circle = new Ellipse2D.Double(100 - 18,100 -18,18,18);
@@ -77,7 +105,6 @@ public class gamePanel extends JPanel {
 	Rectangle2D rect = new Rectangle2D.Double(100 - 18,100 -5,18,5);
 	g2.setColor(Color.WHITE);
 	g2.draw(rect); */
-	super.paintComponent(g);
 	//column 1
 	//1
 	/*g.setColor(Color.BLACK);
@@ -192,11 +219,5 @@ public class gamePanel extends JPanel {
 	g.drawOval(304,206,20,20);
 	g.setColor(Color.WHITE);
 	g.fillOval(305,207,18,18);*/
-
-	for (Ball ball: balls) {
-	    ball.drawBall(g);
-	}
-	g.setColor(Color.ORANGE.darker().darker().darker().darker().darker());
-	g.fillRect(x,y,5,100);
     }
 }	
