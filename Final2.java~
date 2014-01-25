@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
-public class Final2 implements ActionListener {
+public class Final implements ActionListener {
     JPanel titlePanel, gamePanel, buttonPanel;
     JLabel titleLabel, turnLabel, oneTypeLabel, twoTypeLabel;
     JButton newGameButton;

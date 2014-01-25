@@ -10,11 +10,52 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 public class gamePanel extends JPanel {
+    ArrayList<Ball> balls = new ArrayList<Ball>();
+
     public gamePanel() {
 	setOpaque(true);
-	setBackground(Color.GREEN);  
+	setBackground(Color.GREEN);
+	makeBalls();
     }
-    public void paintComponent(Graphics g) {
+
+    public void makeBalls() {
+	Ball ball1 = new Ball(1,624,206);
+	balls.add(ball1);
+	//this.update(this.getGraphics()); this breaks everything yay
+
+	//column 2
+	//6
+	Ball ball6 = new Ball(6,644,196);
+	balls.add(ball6);
+	//12
+	Ball ball12 = new Ball(12,644,216);
+	balls.add(ball12);
+
+	//column 3
+	//13
+	Ball ball13 = new Ball(13,664,186);
+	balls.add(ball13);
+	//8
+	Ball ball8 = new Ball(8,664,206);
+	balls.add(ball8);
+	//5
+	Ball ball5 = new Ball(5,664,226);
+	balls.add(ball5);
+
+	//column 4
+	//11
+	Ball ball11 = new Ball(11,684,176);
+	balls.add(ball11);
+	//2
+	Ball ball2 = new Ball(2,684,196);
+	balls.add(ball2);
+	//4
+	Ball ball4 = new Ball(4,684,216);
+	balls.add(ball4);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
 	/*
 	Graphics2D g2 = (Graphics2D) g;
 	Ellipse2D circle = new Ellipse2D.Double(100 - 18,100 -18,18,18);
@@ -26,7 +67,7 @@ public class gamePanel extends JPanel {
 	super.paintComponent(g);
 	//column 1
 	//1
-	g.setColor(Color.BLACK);
+	/*g.setColor(Color.BLACK);
 	g.drawOval(624,206,20,20);
 	g.setColor(Color.YELLOW);
 	g.fillOval(625,207,18,18);
@@ -137,6 +178,10 @@ public class gamePanel extends JPanel {
 	g.setColor(Color.BLACK);
 	g.drawOval(304,206,20,20);
 	g.setColor(Color.WHITE);
-	g.fillOval(305,207,18,18);
+	g.fillOval(305,207,18,18);*/
+
+	for (Ball ball: balls) {
+	    ball.drawBall(g);
+	}
     }
 }	

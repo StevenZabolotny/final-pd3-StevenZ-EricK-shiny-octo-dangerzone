@@ -6,7 +6,7 @@ import java.util.*;
 import java.awt.event.*;
 import java.awt.Color;
 
-public class Ball {
+public class Ball extends JPanel {
     private int xcor,ycor;
     private int rxcor,rycor,radius;
     private int num;
@@ -16,9 +16,12 @@ public class Ball {
 	xcor = x;
 	ycor = y;
 	radius = 9;
+	this.setVisible(true);
+	
     }
 
-    public void drawBall(Graphics g) {
+    public void paintComponent(Graphics g) {
+	super.paintComponent(g);
 	boolean isStriped = (num > 8);
 	int color = num%8;
 	
