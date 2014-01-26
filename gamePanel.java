@@ -22,6 +22,8 @@ public class gamePanel extends JPanel implements MouseListener {
     public void setAction(String action) {
 	this.action = action;}
     double theta;
+    //Timer t;
+    boolean transition;
     
     public gamePanel() {
 	setOpaque(true);
@@ -30,6 +32,8 @@ public class gamePanel extends JPanel implements MouseListener {
 	addMouseMotionListener(new MouseMotionAdapter() {
 	    @Override
 	    public void mouseMoved(MouseEvent e) {
+		if (action.equals("pulling") && (transition == false))
+		    transition = true;
 		Point p = e.getPoint();
 		x = (int)(p.getX());
 		y = (int)(p.getY());
@@ -50,6 +54,7 @@ public class gamePanel extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
 
 	if (action.equals("turning")) {
+	    transition = false;
 	    //when the stick is rotating around the ball and the mouse is pressed
 	    int xdis = Math.abs(x - cuerx);
 	    int ydis = Math.abs(y - cuery);
@@ -72,14 +77,12 @@ public class gamePanel extends JPanel implements MouseListener {
 		action = "turning";
 	    }
 
-	    /*
-	      need a delay here so that it doesn't just go turning->pulling->released in one click
-
 	    else { 
 		//left clicking
-		action = "released";
+		if (transition) { //need a delay here so that it doesn't just go turning->pulling->released in one click
+		    action = "released";
+		}
 	    }
-	    */
 	}
     }
 
@@ -164,6 +167,7 @@ public class gamePanel extends JPanel implements MouseListener {
 
     @Override
     protected void paintComponent(Graphics g) {
+	System.out.print(action); //TESTING PURPOSES ONLY
 	super.paintComponent(g);
 	Graphics2D g2d = (Graphics2D) g;
 	g.setColor(Color.BLACK);

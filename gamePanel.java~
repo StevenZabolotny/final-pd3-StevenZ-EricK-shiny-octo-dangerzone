@@ -62,7 +62,6 @@ public class gamePanel extends JPanel implements MouseListener {
 		lastpully = y;
 		action = "pulling";
 		//the stick is no longer rotating but rather being pulled back
-		System.out.print(action);
 	    }
 	}
 
@@ -165,9 +164,6 @@ public class gamePanel extends JPanel implements MouseListener {
 
     @Override
     protected void paintComponent(Graphics g) {
-
-	System.out.print(action);
-	System.out.print("t");
 	super.paintComponent(g);
 	Graphics2D g2d = (Graphics2D) g;
 	g.setColor(Color.BLACK);
@@ -188,7 +184,6 @@ public class gamePanel extends JPanel implements MouseListener {
 	}
 
 	if (action.equals("turning")) {
-	    System.out.print("B");
 	    //rotating the stick around the cue ball 
 	    g2d.setColor(Color.ORANGE.darker().darker().darker().darker());
 	    Shape rectangle = new Rectangle(cuerx - 3,cuery - 100,6,100);
@@ -204,11 +199,9 @@ public class gamePanel extends JPanel implements MouseListener {
 	    g2d.fill(transformed);
 	}
 
-	System.out.print("U");
 	if (action.equals("pulling")) {
 	    //pulling the stick back to hit the ball
 	    //the stick must be pulled back straight (line defined by points cuerx,cuery and pullx,pully)
-	    System.out.print("C");
 	    double m = ((double)(pully-cuery))/((double)(pullx-cuerx));
 	    if ((Math.pow((x-cuerx),2) + Math.pow((y-cuery),2)) < 43681) {
 		lastpullx = x;
@@ -288,8 +281,7 @@ public class gamePanel extends JPanel implements MouseListener {
 	}	    
     }
     
-    public boolean sameSign(double a, double b) {
-	System.out.print("E");
+    public boolean sameSign(double a, double b) {  
 	return (a >= 0) ^ (b < 0);}
  
 }
