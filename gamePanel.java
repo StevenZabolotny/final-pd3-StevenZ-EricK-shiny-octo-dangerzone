@@ -22,8 +22,9 @@ public class gamePanel extends JPanel implements MouseListener {
     public void setAction(String action) {
 	this.action = action;}
     double theta;
-    //Timer t;
-    boolean transition;
+    double t = 0.0;
+    boolean transition,firstcall;
+    double releasevar = 9.1; //needs to start above 9
     
     public gamePanel() {
 	setOpaque(true);
@@ -34,6 +35,8 @@ public class gamePanel extends JPanel implements MouseListener {
 	    public void mouseMoved(MouseEvent e) {
 		if (action.equals("pulling") && (transition == false))
 		    transition = true;
+		if (action.equals("released") && (releasevar <= 9))
+		    action = "hit";
 		Point p = e.getPoint();
 		x = (int)(p.getX());
 		y = (int)(p.getY());
@@ -81,6 +84,7 @@ public class gamePanel extends JPanel implements MouseListener {
 		//left clicking
 		if (transition) { //need a delay here so that it doesn't just go turning->pulling->released in one click
 		    action = "released";
+		    firstcall = true;
 		}
 	    }
 	}
@@ -269,23 +273,49 @@ public class gamePanel extends JPanel implements MouseListener {
 	}
 
 	if (action.equals("released")) {
-	    double totald = (Math.pow((Math.pow(xdis,2)+Math.pow(ydis,2)),0.5))-9;
+	    double totald = Math.pow((Math.pow(xdis,2)+Math.pow(ydis,2)),0.5);
 	    double vi = 0.0;
 	    double a = 5.0;
-	    double t; //we need a time counter
+	    if (firstcall) {
+		t = 0.0; //resets time
+		firstcall = !firstcall;
+	    }
+	    double d;
 
-	    //double d <-- actual distance traveled by stick (d = vit + 0.5*a*t*t)
-	    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+	    t++;
+	    System.out.println(t);
+	    //d = vit + 0.5*a*t*t
+	    double ttemp = t/10;
+	    d = 0.5*a*ttemp*ttemp;
+	    
+	    double dx = xdis*(totald - d)/totald;
+	    double dy = ydis*(totald - d)/totald;
+	    
+	    g2d.setColor(Color.ORANGE.darker().darker().darker().darker());
+	    Shape rectangle = new Rectangle(cuerx - 3,cuery - 100,6,100);
+		
+	    AffineTransform rotatetransform = new AffineTransform();
+	    rotatetransform.rotate(theta+(Math.PI/2),cuerx,cuery);
+	    Shape rotated = rotatetransform.createTransformedShape(rectangle);
+	    
+	    AffineTransform transtransform1 = new AffineTransform();
+	    transtransform1.translate(9*Math.cos(theta),9*Math.sin(theta));
+	    Shape translated = transtransform1.createTransformedShape(rotated);
+	    
+	    AffineTransform transtransform2 = new AffineTransform();
+	    transtransform2.translate(dx,dy);
+	    Shape transformed = transtransform2.createTransformedShape(translated);
+	    g2d.fill(transformed);
+	    
+	    releasevar = totald-d;
+	}
 
-	    //hit when the stick hits the ball (d = totald)  and transfers all of its momentum (that big equation I came up with that one day)
-
-	    //HIT GOES HERE DON'T TRY TO CHANGE THIS
-
-	    //hit(); 
-	}	    
+	if (action.equals("hit")) {
+	    hit(); 
+	}
     }
     
     public boolean sameSign(double a, double b) {  
 	return (a >= 0) ^ (b < 0);}
- 
+
 }
