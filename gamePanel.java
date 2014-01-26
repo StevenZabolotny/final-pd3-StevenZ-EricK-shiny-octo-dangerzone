@@ -13,10 +13,10 @@ import java.awt.PointerInfo;
 import java.awt.geom.AffineTransform;
 
 public class gamePanel extends JPanel implements MouseListener {
-    int x = 0;
-    int y = 0;
+    int x,y;
     int cuerx = 314;
     int cuery = 216;
+    int pullx,pully,lastpullx,lastpully;
     ArrayList<Ball> balls = new ArrayList<Ball>();
     String action = "turning";
     public void setAction(String action) {
@@ -36,24 +36,11 @@ public class gamePanel extends JPanel implements MouseListener {
 		repaint();
 	    }	    
 	});
+	addMouseListener(this);
     }
 
     public void mousePressed(MouseEvent e) {
-	System.out.print("b"); ////////////////////////////////////////////////
-	if (action.equals("turning")) {
-	    //when the stick is rotating around the ball and the mouse is pressed
-	    int xdis = Math.abs(x - cuerx);
-	    int ydis = Math.abs(y - cuery);
-	    System.out.print("c"); ////////////////////////////////////////////////
-	    if (xdis < 109 && ydis < 109) {
-		theta = angletoCue();
-		action = "pulling";
-		System.out.print("d"); ////////////////////////////////////////////////
-		//the stick is no longer rotating but rather being pulled back)
-	    }
-	}
     }
-	    
     public void mouseReleased(MouseEvent e) {
     }
     public void mouseEntered(MouseEvent e) {
@@ -61,7 +48,28 @@ public class gamePanel extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
     }
     public void mouseClicked(MouseEvent e) {
-	hit();
+
+	if (action.equals("turning")) {
+	    //when the stick is rotating around the ball and the mouse is pressed
+	    int xdis = Math.abs(x - cuerx);
+	    int ydis = Math.abs(y - cuery);
+	    if ((Math.pow(xdis,2) + Math.pow(ydis,2)) < 25281) { //100 px circle around the ball 
+		theta = angletoCue();
+		//the stick can't be moved wherever, it has to be in a straight line between the cue and where it is first clicked
+		pullx = x;
+		pully = y;
+		action = "pulling";
+		//the stick is no longer rotating but rather being pulled back)
+	    }
+	}
+
+	if (action.equals("pulling")) {
+	    //stick has been pulled back and is now being shot
+	    
+
+	    //animation of the stick using a = k, vi = 0, d = (calculated from x,y to cue) to find vf 
+	    //hit(); when the stick hits the ball and transfers all of its momentum (that big equation I came up with that one day)
+
     }
 
     public void hit() {
@@ -178,30 +186,62 @@ public class gamePanel extends JPanel implements MouseListener {
 	    Shape transformed = transtransform.createTransformedShape(rotated);
 	    
 	    g2d.fill(transformed);
-	    System.out.print("a"); ////////////////////////////////////////////////
 	}
 
 	if (action.equals("pulling")) {
 	    //pulling the stick back to hit the ball
-	    g2d.setColor(Color.ORANGE.darker().darker().darker().darker());
-	    Shape rectangle = new Rectangle(cuerx - 3,cuery - 100,6,100);
-
-	    AffineTransform rotatetransform = new AffineTransform();
-	    rotatetransform.rotate(angletoCue()+(Math.PI/2),cuerx,cuery);
-	    Shape rotated = rotatetransform.createTransformedShape(rectangle);
-
-	    AffineTransform transtransform1 = new AffineTransform();
-	    transtransform1.translate(9*Math.cos(angletoCue()),9*Math.sin(angletoCue()));
-	    Shape translated = transtransform1.createTransformedShape(rotated);
-
-	    int xdis = x - cuerx;
-	    int ydis = y - cuery;
 	    
-	    AffineTransform transtransform2 = new AffineTransform();
-	    transtransform2.translate(xdis,ydis);
-	    Shape transformed = transtransform1.createTransformedShape(translated);
-	    g2d.fill(transformed);
-	    System.out.print("e"); ////////////////////////////////////////////////
+	    //the stick must be pulled back straight (line defined by points cuerx,cuery and pullx,pully
+	    double m = ((double)(pully-cuery))/((double)(pullx-cuerx));
+	    
+	    if ((Math.abs((y-cuery) - (m*(x-cuerx))) < 5) && sameSign(x-cuerx,pullx-cuerx) && sameSign(y-cuery,pully-cuery)) { //don't expect the user to move the mouse in a perfect line, and want to stay on the same initial side of the ball	
+		lastpullx = x;
+		lastpully = y;
+		g2d.setColor(Color.ORANGE.darker().darker().darker().darker());
+		Shape rectangle = new Rectangle(cuerx - 3,cuery - 100,6,100);
+
+		AffineTransform rotatetransform = new AffineTransform();
+		rotatetransform.rotate(theta+(Math.PI/2),cuerx,cuery);
+		Shape rotated = rotatetransform.createTransformedShape(rectangle);
+
+		AffineTransform transtransform1 = new AffineTransform();
+		transtransform1.translate(9*Math.cos(theta),9*Math.sin(theta));
+		Shape translated = transtransform1.createTransformedShape(rotated);
+
+		int xdis = x - cuerx;
+		int ydis = y - cuery;
+		System.out.print(" " + xdis + " " + ydis + " ");
+	    
+		AffineTransform transtransform2 = new AffineTransform();
+		transtransform2.translate(xdis,ydis);
+		Shape transformed = transtransform2.createTransformedShape(translated);
+		g2d.fill(transformed);
+	    }  
+	    else {
+		//if the user comes off of the line
+		g2d.setColor(Color.ORANGE.darker().darker().darker().darker());
+		Shape rectangle = new Rectangle(cuerx - 3,cuery - 100,6,100);
+
+		AffineTransform rotatetransform = new AffineTransform();
+		rotatetransform.rotate(theta+(Math.PI/2),cuerx,cuery);
+		Shape rotated = rotatetransform.createTransformedShape(rectangle);
+
+		AffineTransform transtransform1 = new AffineTransform();
+		transtransform1.translate(9*Math.cos(theta),9*Math.sin(theta));
+		Shape translated = transtransform1.createTransformedShape(rotated);
+
+		int xdis = lastpullx - cuerx;
+		int ydis = lastpully - cuery;
+	    
+		AffineTransform transtransform2 = new AffineTransform();
+		transtransform2.translate(xdis,ydis);
+		Shape transformed = transtransform2.createTransformedShape(translated);
+		g2d.fill(transformed);
+	    }
 	}
-    }
-}	
+    }	    
+
+    public boolean sameSign(double a, double b) {
+	return (a >= 0) ^ (b < 0);}
+ 
+}
