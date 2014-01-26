@@ -54,35 +54,32 @@ public class gamePanel extends JPanel implements MouseListener {
 	    int xdis = Math.abs(x - cuerx);
 	    int ydis = Math.abs(y - cuery);
 	    if ((Math.pow(xdis,2) + Math.pow(ydis,2)) < 25281) { //100 px circle around the ball 
-		theta = angletoCue();                                                                                                              
+		theta = angletoCue();
 		//the stick can't be moved wherever, it has to be in a straight line between the cue and where it is first clicked
 		pullx = x;
 		pully = y;
 		lastpullx = x;
 		lastpully = y;
 		action = "pulling";
-		//the stick is no longer rotating but rather being pulled back)
+		//the stick is no longer rotating but rather being pulled back
 	    }
 	}
 
 	if (action.equals("pulling")) {
+
 	    if (SwingUtilities.isRightMouseButton(e)) {
 		//right click resets the pull
 		action = "turning";
 	    }
- 
-	    else if (SwingUtilities.isLeftMouseButton(e)) { 
+
+	    /*
+	      need a delay here so that it doesn't just go turning->pulling->released in one click
+
+	    else { 
 		//left clicking
 		action = "released";
-		hit(); 
-	    }      
-		
-	    //stick has been pulled back and is now being shot (USE XDIS AND YDIS NOT X AND Y)
-	    
-
-	    //animation of the stick using a = k, vi = 0, d = (calculated from x,y to cue) to find vf 
-
-	    //when the stick hits the ball and transfers all of its momentum (that big equation I came up with that one day)
+	    }
+	    */
 	}
     }
 
@@ -207,34 +204,34 @@ public class gamePanel extends JPanel implements MouseListener {
 	    //the stick must be pulled back straight (line defined by points cuerx,cuery and pullx,pully)
 	    double m = ((double)(pully-cuery))/((double)(pullx-cuerx));
 	    if ((Math.pow((x-cuerx),2) + Math.pow((y-cuery),2)) < 43681) {
-		    lastpullx = x;
-		    lastpully = y;
-		    g2d.setColor(Color.ORANGE.darker().darker().darker().darker());
-		    Shape rectangle = new Rectangle(cuerx - 3,cuery - 100,6,100);
+		lastpullx = x;
+		lastpully = y;
+		g2d.setColor(Color.ORANGE.darker().darker().darker().darker());
+		Shape rectangle = new Rectangle(cuerx - 3,cuery - 100,6,100);
+		
+		AffineTransform rotatetransform = new AffineTransform();
+		rotatetransform.rotate(theta+(Math.PI/2),cuerx,cuery);
+		Shape rotated = rotatetransform.createTransformedShape(rectangle);
+		
+		AffineTransform transtransform1 = new AffineTransform();
+		transtransform1.translate(9*Math.cos(theta),9*Math.sin(theta));
+		Shape translated = transtransform1.createTransformedShape(rotated);
 		    
-		    AffineTransform rotatetransform = new AffineTransform();
-		    rotatetransform.rotate(theta+(Math.PI/2),cuerx,cuery);
-		    Shape rotated = rotatetransform.createTransformedShape(rectangle);
-		    
-		    AffineTransform transtransform1 = new AffineTransform();
-		    transtransform1.translate(9*Math.cos(theta),9*Math.sin(theta));
-		    Shape translated = transtransform1.createTransformedShape(rotated);
-		    
-		    double dis = (Math.pow((Math.pow(x-cuerx,2)+Math.pow(y-cuery,2)),0.5));
+		double dis = (Math.pow((Math.pow(x-cuerx,2)+Math.pow(y-cuery,2)),0.5));
 
-		    //the stick must be pulled back in a straight line 
-		    xdis = (int)(dis/(Math.abs(m)+1));
-		    ydis = (int)((m*(xdis)));
+		//the stick must be pulled back in a straight line 
+		xdis = (int)(dis/(Math.abs(m)+1));
+		ydis = (int)((m*(xdis)));
 		    
-		    if (Math.cos(theta) < 0) {
-			xdis = -1*xdis;
-			ydis = -1*ydis;
-		    }
+		if (Math.cos(theta) < 0) {
+		    xdis = -1*xdis;
+		    ydis = -1*ydis;
+		}
 		    
-		    AffineTransform transtransform2 = new AffineTransform();
-		    transtransform2.translate(0.75*(xdis),0.75*(ydis));
-		    Shape transformed = transtransform2.createTransformedShape(translated);
-		    g2d.fill(transformed);
+		AffineTransform transtransform2 = new AffineTransform();
+		transtransform2.translate(0.75*(xdis),0.75*(ydis));
+		Shape transformed = transtransform2.createTransformedShape(translated);
+		g2d.fill(transformed);
 	    } 
 	    else {
 		//if the user comes out of the circle
@@ -266,9 +263,25 @@ public class gamePanel extends JPanel implements MouseListener {
 		g2d.fill(transformed);
 	    }	
 	}
-    }	    
 
-    public boolean sameSign(double a, double b) {
+	if (action.equals("released")) {
+	    double totald = (Math.pow((Math.pow(xdis,2)+Math.pow(ydis,2)),0.5))-9;
+	    double vi = 0.0;
+	    double a = 5.0;
+	    double t; //we need a time counter
+
+	    //double d <-- actual distance traveled by stick (d = vit + 0.5*a*t*t)
+	    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	    //hit when the stick hits the ball (d = totald)  and transfers all of its momentum (that big equation I came up with that one day)
+
+	    //HIT GOES HERE DON'T TRY TO CHANGE THIS
+
+	    //hit(); 
+	}	    
+    }
+    
+    public boolean sameSign(double a, double b) {  
 	return (a >= 0) ^ (b < 0);}
  
 }
