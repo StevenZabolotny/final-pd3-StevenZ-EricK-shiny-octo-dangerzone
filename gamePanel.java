@@ -69,9 +69,13 @@ public class gamePanel extends JPanel implements MouseListener {
 	    if (SwingUtilities.isRightMouseButton(e)) {
 		//right click resets the pull
 		action = "turning";
-		hit(); 
 	    }
-       
+ 
+	    else { 
+		//left clicking
+		action = "released";
+		hit(); 
+	    }      
 		
 	    //stick has been pulled back and is now being shot (USE XDIS AND YDIS NOT X AND Y)
 	    
