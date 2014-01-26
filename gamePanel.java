@@ -54,7 +54,7 @@ public class gamePanel extends JPanel implements MouseListener {
 	    int xdis = Math.abs(x - cuerx);
 	    int ydis = Math.abs(y - cuery);
 	    if ((Math.pow(xdis,2) + Math.pow(ydis,2)) < 25281) { //100 px circle around the ball 
-		theta = angletoCue();
+		theta = angletoCue();                                                                                                              
 		//the stick can't be moved wherever, it has to be in a straight line between the cue and where it is first clicked
 		pullx = x;
 		pully = y;
@@ -71,7 +71,7 @@ public class gamePanel extends JPanel implements MouseListener {
 		action = "turning";
 	    }
  
-	    else { 
+	    else if (SwingUtilities.isLeftMouseButton(e)) { 
 		//left clicking
 		action = "released";
 		hit(); 
