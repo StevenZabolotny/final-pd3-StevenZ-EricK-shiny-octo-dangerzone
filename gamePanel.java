@@ -10,10 +10,13 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.MouseInfo;
 import java.awt.PointerInfo;
+import java.awt.geom.AffineTransform;
 
-public class gamePanel extends JPanel {
+public class gamePanel extends JPanel implements MouseListener {
     int x = 0;
     int y = 0;
+    int cuerx = 314;
+    int cuery = 216;
     ArrayList<Ball> balls = new ArrayList<Ball>();
 
     public gamePanel() {
@@ -27,12 +30,46 @@ public class gamePanel extends JPanel {
 		x = (int)p.getX();
 		y = (int)p.getY();
 		repaint();
-	    }
+	    }	    
 	});
     }
 
-    /*
+    public void mousePressed(MouseEvent e) {
+    }
+    public void mouseReleased(MouseEvent e) {
+    }
+    public void mouseEntered(MouseEvent e) {
+    }
+    public void mouseExited(MouseEvent e) {
+    }
+    public void mouseClicked(MouseEvent e) {
+	hit();
+    }
+
+    public void hit() {
+	Ball cue = balls.get(0);
+	double vx = cue.getX() - x;
+	if (vx < 0)
+	    cue.setVx(vx * -1);
+	else
+	    cue.setVx(vx);
+	double vy = cue.getY() - y;
+	if (vy < 0)
+	    cue.setVy(vy * -1);
+	else
+	    cue.setVy(vy);
+	if (x <= 0 && y <= 0)
+	    cue.setDir(1);
+	else if (x > 0 && y <= 0)
+	    cue.setDir(2);
+	else if (x > 0 && y > 0)
+	    cue.setDir(3);
+	else
+	    cue.setDir(4);
+    }
+    
     public double angletoCue() {
+	/*
 	Ball cue = balls.get(0);
 	double hyp = Math.pow(Math.pow(cue.getX() - x,2) + Math.pow(cue.getY() - y,2),0.5);
 	double side1 = cue.getX() - x;
@@ -43,15 +80,30 @@ public class gamePanel extends JPanel {
 	    side2 = side2 * -1;
 	//the angle between side1 and hyp is referred to as C.
 	double C = Math.acos((Math.pow(hyp,2) + Math.pow(side1,2) - Math.pow(side2,2)) / (2 * hyp * side1));
+	
 	if (cue.getY() > y)
 	    C = -C;;
 	if (cue.getX() > x)
 	    C = C + Math.PI;
 	return C;
+	*/
+        double side1 = cuerx - x;
+        if (side1 < 0)
+            side1 = side1 * -1;
+        double side2 = cuery - y;
+        if (side2 < 0)
+            side2 = side2 * -1;
+        //the angle between side1 and hyp is referred to as C.
+        double C = Math.atan(Math.pow(side2,2)/Math.pow(side1,2));
+        if (cuerx > x)
+            C = Math.PI - C;
+        if (cuery > y)
+            C = -C;
+        return C;
     }
-    */
+    
 
-public void makeBalls() {
+    public void makeBalls() {
 	//1 and 9 are yellow (255,215,0)
 	//2 and 10 are blue (0,0,238)
 	//3 and 11 are red (205,0,0)
@@ -108,6 +160,18 @@ public void makeBalls() {
 	}
 	g.setColor(Color.ORANGE.darker().darker().darker().darker());
 	g.fillRect(x - 3,y - 100,6,100);
+	if (balls.get(0).getVx() > 0 || balls.get(0).getVy() > 0) {
+	    Ball b = balls.get(0);
+	    b.moveBall(g);
+	}
+
+        g2d.setColor(Color.ORANGE.darker().darker().darker().darker());
+        Shape rectangle = new Rectangle(cuerx - 3,cuery - 100,6,100);
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(angletoCue()+(Math.PI /2),cuerx,cuery);
+        Shape transformed = transform.createTransformedShape(rectangle);
+        g2d.fill(transformed);
+	    
 	/*
 	g2d.setPaint(Color.ORANGE.darker().darker().darker().darker().darker());
 	g2d.translate(this.getWidth() / 2, this.getHeight());
