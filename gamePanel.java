@@ -69,6 +69,7 @@ public class gamePanel extends JPanel implements MouseListener {
 	    if (SwingUtilities.isRightMouseButton(e)) {
 		//right click resets the pull
 		action = "turning";
+		hit(); 
 	    }
        
 		
@@ -76,7 +77,8 @@ public class gamePanel extends JPanel implements MouseListener {
 	    
 
 	    //animation of the stick using a = k, vi = 0, d = (calculated from x,y to cue) to find vf 
-	    //hit(); when the stick hits the ball and transfers all of its momentum (that big equation I came up with that one day)
+
+	    //when the stick hits the ball and transfers all of its momentum (that big equation I came up with that one day)
 	}
     }
 
@@ -177,7 +179,7 @@ public class gamePanel extends JPanel implements MouseListener {
 
 	if (balls.get(0).getVx() > 0 || balls.get(0).getVy() > 0) {
 	    Ball b = balls.get(0);
-	    b.moveBall(g);
+	    b.moveBall();
 	}
 
 	if (action.equals("turning")) {

@@ -12,6 +12,7 @@ public class Ball {
     private double vx,vy;
     private int dir;
     private boolean striped;
+    private int t;
     
     public Ball(int x,int y,int n,int R,int G,int B,boolean striped) {
 	this.x = x;
@@ -64,15 +65,19 @@ public class Ball {
 	}
     }
 
-    public void moveBall(Graphics g) {
-	int dirx = 1;
-	int diry = 1;
-	if (dir == 3 || dir == 2)
-	    dirx = -1;
-	if (dir > 2)
-	    diry = -1;
-	int xpos = x + (int)(vx * dirx);
-	int ypos = y + (int)(vy * diry);
+    public void moveBall() {
+	if (t % 15 == 0) {
+	    int dirx = -1;
+	    int diry = -1;
+	    if (dir == 3 || dir == 2)
+		dirx = 1;
+	    if (dir > 2)
+		diry = 1;
+	    x = x + (int)(vx * dirx);
+	    y = y + (int)(vy * diry);
+	}
+	t = t + 1;
+	/*
 	if (striped) {
 	    g.setColor(Color.WHITE);
 	    g.fillOval((int)xpos,(int)ypos,18,18);
@@ -85,5 +90,6 @@ public class Ball {
 	}
 	vx = vx - 10;
 	vy = vy - 10;
+	*/
     }
 }
