@@ -8,12 +8,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.AffineTransform;
 import java.awt.MouseInfo;
 import java.awt.PointerInfo;
 
 public class gamePanel extends JPanel {
     int x = 0;
     int y = 0;
+    int cuerx = 314;
+    int cuery = 216;
+
     ArrayList<Ball> balls = new ArrayList<Ball>();
 
     public gamePanel() {
@@ -31,27 +35,23 @@ public class gamePanel extends JPanel {
 	});
     }
 
-    /*
     public double angletoCue() {
-	Ball cue = balls.get(0);
-	double hyp = Math.pow(Math.pow(cue.getX() - x,2) + Math.pow(cue.getY() - y,2),0.5);
-	double side1 = cue.getX() - x;
+	double side1 = cuerx - x;
 	if (side1 < 0)
 	    side1 = side1 * -1;
-	double side2 = cue.getY() - y;
+	double side2 = cuery - y;
 	if (side2 < 0)
 	    side2 = side2 * -1;
 	//the angle between side1 and hyp is referred to as C.
-	double C = Math.acos((Math.pow(hyp,2) + Math.pow(side1,2) - Math.pow(side2,2)) / (2 * hyp * side1));
-	if (cue.getY() > y)
-	    C = -C;;
-	if (cue.getX() > x)
-	    C = C + Math.PI;
+	double C = Math.atan(Math.pow(side2,2)/Math.pow(side1,2));
+	if (cuerx > x)
+	    C = Math.PI - C;
+	if (cuery > y)
+	    C = -C;
 	return C;
     }
-    */
 
-public void makeBalls() {
+    public void makeBalls() {
 	//1 and 9 are yellow (255,215,0)
 	//2 and 10 are blue (0,0,238)
 	//3 and 11 are red (205,0,0)
@@ -106,138 +106,12 @@ public void makeBalls() {
 	for (Ball ball: balls) {
 	    ball.drawBall(g);
 	}
-	g.setColor(Color.ORANGE.darker().darker().darker().darker());
-	g.fillRect(x - 3,y - 100,6,100);
-	/*
-	g2d.setPaint(Color.ORANGE.darker().darker().darker().darker().darker());
-	g2d.translate(this.getWidth() / 2, this.getHeight());
-	g2d.rotate(angletoCue());
-	g2d.translate(-this.getWidth() / 2, -this.getHeight());
-	//g2d.rotate(angletoCue(),balls.get(0).getX(),balls.get(0).getY());
-	g2d.drawRect(x - 3,y - 100,6,100);
-	g2d.fillRect(x - 3,y - 100,6,100);
-	*/
-	/*
-	Graphics2D g2 = (Graphics2D) g;
-	Ellipse2D circle = new Ellipse2D.Double(100 - 18,100 -18,18,18);
-	g2.setColor(Color.BLUE);
-	g2.draw(circle);
-	Rectangle2D rect = new Rectangle2D.Double(100 - 18,100 -5,18,5);
-	g2.setColor(Color.WHITE);
-	g2.draw(rect); */
-	//column 1
-	//1
-	/*g.setColor(Color.BLACK);
-	g.drawOval(624,206,20,20);
-	g.setColor(Color.YELLOW);
-	g.fillOval(625,207,18,18);
-
-	//column 2
-	//14
-	g.setColor(Color.BLACK);		
-	g.drawOval(644,196,20,20);
-	g.setColor(Color.GREEN);
-	g.fillOval(645,197,18,18);
-
-	//4
-	g.setColor(Color.BLACK);
-	g.drawOval(644,216,20,20);
-	g.setColor(Color.MAGENTA);
-	g.fillOval(645,217,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(645 + 7,217,5,18);
-
-	//column 3
-	//5
-	g.setColor(Color.BLACK);
-	g.drawOval(664,186,20,20);
-	g.setColor(Color.ORANGE.darker());
-	g.fillOval(665,187,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(665 + 7,187,5,18);
-
-	//8
-	g.setColor(Color.BLACK);
-	g.drawOval(664,206,20,20);
-	g.setColor(Color.BLACK);
-	g.fillOval(665,207,18,18);
-
-	//13
-	g.setColor(Color.BLACK);
-	g.drawOval(664,226,20,20);
-	g.setColor(Color.ORANGE.darker());
-	g.fillOval(665,227,18,18);
-
-	//column 4
-	//11
-	g.setColor(Color.BLACK);
-	g.drawOval(684,176,20,20);
-	g.setColor(Color.RED);
-	g.fillOval(685,177,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(685 + 7,177,5,18);
-
-	//2
-	g.setColor(Color.BLACK);		
-	g.drawOval(684,196,20,20);
-	g.setColor(Color.BLUE);
-	g.fillOval(685,197,18,18);
-
-	//12
-	g.setColor(Color.BLACK);		
-	g.drawOval(684,216,20,20);
-	g.setColor(Color.MAGENTA);
-	g.fillOval(685,217,18,18);
-
-	//9 (looks suspiciously like solid yellow)
-	g.setColor(Color.BLACK);
-	g.drawOval(684,236,20,20);
-	g.setColor(Color.YELLOW);
-	g.fillOval(685,237,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(685 + 7,237,5,18);
-
-	//column 5
-	//7
-	g.setColor(Color.BLACK);		
-	g.drawOval(704,166,20,20);
-	g.setColor(Color.ORANGE.darker().darker().darker().darker());
-	g.fillOval(705,167,18,18);
-
-	//10
-	g.setColor(Color.BLACK);
-	g.drawOval(704,186,20,20);
-	g.setColor(Color.BLUE);
-	g.fillOval(705,187,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(705 + 7,187,5,18);
-
-	//15
-	g.setColor(Color.BLACK);
-	g.drawOval(704,206,20,20);
-	g.setColor(Color.ORANGE.darker().darker().darker().darker());
-	g.fillOval(705,207,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(705 + 7,207,5,18);
-
-	//3
-	g.setColor(Color.BLACK);
-	g.drawOval(704,226,20,20);
-	g.setColor(Color.RED);
-	g.fillOval(705,227,18,18);
-
-	//6
-	g.setColor(Color.BLACK);
-	g.drawOval(704,246,20,20);
-	g.setColor(Color.GREEN);
-	g.fillOval(705,247,18,18);
-	g.setColor(Color.WHITE);
-	g.fillRect(705 + 7,247,5,18);
-
-	//the almighty cue ball
-	g.setColor(Color.BLACK);
-	g.drawOval(304,206,20,20);
-	g.setColor(Color.WHITE);
-	g.fillOval(305,207,18,18);*/
+	
+	g2d.setColor(Color.ORANGE.darker().darker().darker().darker());
+	Shape rectangle = new Rectangle(cuerx - 3,cuery - 100,6,100);
+	AffineTransform transform = new AffineTransform();
+	transform.rotate(angletoCue()+(Math.PI /2),cuerx,cuery);
+	Shape transformed = transform.createTransformedShape(rectangle);
+	g2d.fill(transformed);
     }
 }	
