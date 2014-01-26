@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
-public class Final implements ActionListener {
+public class Final2 implements ActionListener {
     JPanel titlePanel, gamePanel, buttonPanel;
     JLabel titleLabel, turnLabel, oneTypeLabel, twoTypeLabel;
     JButton newGameButton;
@@ -76,9 +76,9 @@ public class Final implements ActionListener {
         JFrame frame = new JFrame("8-ball Pool!");
 
         //Create and set up the content pane.
-        Final gui = new Final();
+	Final2 gui = new Final2();
         frame.setContentPane(gui.createContentPane());
-
+	frame.add(gui.createContentPane());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 1500);
         frame.setVisible(true);
