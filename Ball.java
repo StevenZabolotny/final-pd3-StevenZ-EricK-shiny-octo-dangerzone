@@ -34,6 +34,12 @@ public class Ball {
     public double getY() {
 	return (double)y;
     }
+    public void setX(int xi) {
+	x = xi;
+    }
+    public void setY(int yi) {
+	y = yi;
+    }
     public double getVx() {
 	return vx;
     }
