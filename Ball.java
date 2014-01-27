@@ -11,7 +11,7 @@ public class Ball {
     private int n,R,G,B;
     private double vx,vy;
     private int dir,dirx,diry;
-    private boolean striped,collided,wallescape;
+    private boolean striped,collided,wallescape,isMoving;
     private int t;
     
     public Ball(int x,int y,int n,int R,int G,int B,boolean striped) {
@@ -26,6 +26,7 @@ public class Ball {
 	this.B = B;
 	this.striped = striped;
 	this.wallescape = true;
+	this.isMoving = false;
     }
 
     public double getX() {
@@ -63,6 +64,12 @@ public class Ball {
     }
     public boolean getCol() {
 	return collided;
+    }
+    public void setMov(boolean x) {
+	isMoving = x;
+    }
+    public boolean getMov() {
+	return isMoving;
     }
 
 
