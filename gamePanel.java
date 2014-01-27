@@ -22,7 +22,7 @@ public class gamePanel extends JPanel implements MouseListener {
     public void setAction(String action) {
 	this.action = action;}
     double theta;
-    double t = 0.0;
+    double t = 0.0; 
     boolean transition,firstcall;
     double releasevar = 9.1; //needs to start above 9
     
@@ -31,18 +31,20 @@ public class gamePanel extends JPanel implements MouseListener {
 	setBackground(Color.GREEN);
 	makeBalls();
 	addMouseMotionListener(new MouseMotionAdapter() {
-	    @Override
-	    public void mouseMoved(MouseEvent e) {
-		if (action.equals("pulling") && (transition == false))
-		    transition = true;
-		if (action.equals("released") && (releasevar <= 9))
-		    action = "hit";
-		Point p = e.getPoint();
-		x = (int)(p.getX());
-		y = (int)(p.getY());
-		repaint();
-	    }	    
-	});
+		@Override
+		public void mouseMoved(MouseEvent e) {
+		    if (action.equals("pulling") && (transition == false))
+			transition = true;
+		    if (action.equals("released") && (releasevar <= 9)) {
+			t = 0.0;
+			action = "hit";
+		    }
+		    Point p = e.getPoint();
+		    x = (int)(p.getX());
+		    y = (int)(p.getY());
+		    repaint();
+		}	    
+	    });
 	addMouseListener(this);
     }
 
@@ -59,6 +61,8 @@ public class gamePanel extends JPanel implements MouseListener {
 	if (action.equals("turning")) {
 	    transition = false;
 	    //when the stick is rotating around the ball and the mouse is pressed
+	    cuerx = balls.get(0).getX()+9;
+	    cuery = balls.get(0).getY()+9;
 	    int xdis = Math.abs(x - cuerx);
 	    int ydis = Math.abs(y - cuery);
 	    if ((Math.pow(xdis,2) + Math.pow(ydis,2)) < 25281) { //100 px circle around the ball 
@@ -90,53 +94,31 @@ public class gamePanel extends JPanel implements MouseListener {
 	}
     }
 
-    public void hit() {
-	Ball cue = balls.get(0);
-	double vx = (cue.getX() - x) / 2;
-	if (vx < 0)
-	    cue.setVx(vx * -1);
-	else
-	    cue.setVx(vx);
-	double vy = (cue.getY() - y) / 2;
-	if (vy < 0)
-	    cue.setVy(vy * -1);
-	else
-	    cue.setVy(vy);
-	if (x <= 0 && y <= 0)
-	    cue.setDir(1);
-	else if (x > 0 && y <= 0)
-	    cue.setDir(2);
-	else if (x > 0 && y > 0)
-	    cue.setDir(3);
-	else
-	    cue.setDir(4);
-    }
+    /*
+      public void collide(Ball b1, Ball b2) {
+      double vx2 = (b2.getX() - b1.getX());
+      if (vx2 < 0)
+      vx2 = vx2 * -1;
+      double vy2 = (b2.getY() - b1.getY());
+      if (vy2 < 0)
+      vy2 = vy2 * -1;
+      double dif = Math.max(b1.getVx() / 4,b2.getVy() / 4) - Math.max(vx2,vy2);
+      if (dif < 0)
+      dif = dif * -1;
+      vx2 = vx2 + dif;
+      vy2 = vy2 + dif;
+      b1.setVx(b1.getVx() / 2);
+      b1.setVy(b1.getVy() / 2);
+      b2.setVx(vx2);
+      b2.setVy(vy2);
+      b2.setDir(b1.getDir());
+      if (b1.getDir() > 2)
+      b1.setDir(b1.getDir() - 2);
+      else
+      b1.setDir(b1.getDir() + 2);
+      }
+    */
 
-    public void collide(Ball b1, Ball b2) {
-	double vx2 = (b2.getX() - b1.getX());
-	if (vx2 < 0)
-	    vx2 = vx2 * -1;
-	double vy2 = (b2.getY() - b1.getY());
-	if (vy2 < 0)
-	    vy2 = vy2 * -1;
-	double dif = Math.max(b1.getVx() / 4,b2.getVy() / 4) - Math.max(vx2,vy2);
-	if (dif < 0)
-	    dif = dif * -1;
-	vx2 = vx2 + dif;
-	vy2 = vy2 + dif;
-	b1.setVx(b1.getVx() / 2);
-	b1.setVy(b1.getVy() / 2);
-	b2.setVx(vx2);
-	b2.setVy(vy2);
-	b2.setDir(b1.getDir());
-	if (b1.getDir() > 2)
-	    b1.setDir(b1.getDir() - 2);
-	else
-	    b1.setDir(b1.getDir() + 2);
-	b1.setCol(true);
-	b2.setCol(true);
-    }
-    
     public double angletoCue() {
         double side1 = cuerx - x;
         if (side1 < 0)
@@ -199,6 +181,7 @@ public class gamePanel extends JPanel implements MouseListener {
 	System.out.print(action); //TESTING PURPOSES ONLY
 	super.paintComponent(g);
 	Graphics2D g2d = (Graphics2D) g;
+
 	g.setColor(Color.BLACK);
 	g.fillRect(0,0,864,20);
 	g.setColor(Color.BLACK);
@@ -211,17 +194,18 @@ public class gamePanel extends JPanel implements MouseListener {
 	    ball.drawBall(g);
 	}
 
-	for (Ball ball: balls) {
-	    if (ball.getVx() > 0 || ball.getVy() > 0) {
-		ball.moveBall();
-		ball.wall();
-		for (Ball ball2: balls) {
-		    if (ball.isCollide(ball2))
-			collide(ball,ball2);
-		}
-	    }
-	}
-
+	/*
+	  for (Ball ball: balls) {
+	  if (ball.getVx() > 0 || ball.getVy() > 0) {
+	  ball.moveBall();
+	  for (Ball ball2: balls) {
+	  if (ball.isCollide(ball2))
+	  collide(ball,ball2);
+	  }
+	  }
+	  }
+	*/
+	
 	if (action.equals("turning")) {
 	    //rotating the stick around the cue ball 
 	    g2d.setColor(Color.ORANGE.darker().darker().darker().darker());
@@ -306,7 +290,7 @@ public class gamePanel extends JPanel implements MouseListener {
 	if (action.equals("released")) {
 	    double totald = Math.pow((Math.pow(xdis,2)+Math.pow(ydis,2)),0.5);
 	    double vi = 0.0;
-	    double a = 5.0;
+	    double a = 7.5;
 	    if (firstcall) {
 		t = 0.0; //resets time
 		firstcall = !firstcall;
@@ -342,7 +326,23 @@ public class gamePanel extends JPanel implements MouseListener {
 	}
 
 	if (action.equals("hit")) {
-	    hit(); 
+	    double mstick = 555;
+	    double mcue = 260;
+	    double dstickball = Math.pow((Math.pow(xdis,2)+Math.pow(ydis,2)),0.5)-9;
+	    double astick = 0.25;
+	    double mukt = 0.047;
+	    double grav = 9.81;
+	    
+	    t++;
+	    double ttemp = t/1000;
+	    double d = (mstick/mcue)*t*Math.pow((2*astick*dstickball),0.5)-0.5*(65*mukt*grav/mcue)*t*t; //the conglomeration of a ton of kinematics and momentum (the 65 is there because it seems to work well)
+	    double dx = d*Math.cos(theta+Math.PI);
+	    double dy = d*Math.sin(theta+Math.PI);
+	    System.out.println("X: "+dx+", Y: "+dy);
+	    
+	    Ball cueball = balls.get(0);
+	    cueball.setX((int)(cuerx+dx-9));
+	    cueball.setY((int)(cuery+dy-9));
 	}
     }
     
