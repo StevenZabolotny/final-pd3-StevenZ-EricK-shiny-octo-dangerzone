@@ -68,6 +68,9 @@ public class Ball {
     public void setMov(boolean x) {
 	isMoving = x;
     }
+    public boolean getMov() {
+	return isMoving;
+    }
 
 
     public void drawBall(Graphics g) {

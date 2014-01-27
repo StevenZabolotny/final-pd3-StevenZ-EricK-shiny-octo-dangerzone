@@ -120,26 +120,27 @@ public class gamePanel extends JPanel implements MouseListener {
     */
    
       public void collide(Ball b1, Ball b2) {
-      double vx2 = (b2.getX() - b1.getX());
-      if (vx2 < 0)
-      vx2 = vx2 * -1;
-      double vy2 = (b2.getY() - b1.getY());
-      if (vy2 < 0)
-      vy2 = vy2 * -1;
-      double dif = Math.max(b1.getVx() / 4,b2.getVy() / 4) - Math.max(vx2,vy2);
-      if (dif < 0)
-      dif = dif * -1;
-      vx2 = vx2 + dif;
-      vy2 = vy2 + dif;
-      b1.setVx(b1.getVx() / 2);
-      b1.setVy(b1.getVy() / 2);
-      b2.setVx(vx2);
-      b2.setVy(vy2);
-      b2.setDir(b1.getDir());
-      if (b1.getDir() > 2)
-      b1.setDir(b1.getDir() - 2);
-      else
-      b1.setDir(b1.getDir() + 2);
+	  double vx2 = (b2.getX() - b1.getX());
+	  if (vx2 < 0)
+	      vx2 = vx2 * -1;
+	  double vy2 = (b2.getY() - b1.getY());
+	  if (vy2 < 0)
+	      vy2 = vy2 * -1;
+	  double dif = Math.max(b1.getVx() / 4,b2.getVy() / 4) - Math.max(vx2,vy2);
+	  if (dif < 0)
+	      dif = dif * -1;
+	  vx2 = vx2 + dif;
+	  vy2 = vy2 + dif;
+	  b1.setVx(b1.getVx() / 2);
+	  b1.setVy(b1.getVy() / 2);
+	  b2.setVx(vx2);
+	  b2.setVy(vy2);
+	  b2.setDir(b1.getDir());
+	  if (b1.getDir() > 2)
+	      b1.setDir(b1.getDir() - 2);
+	  else
+	      b1.setDir(b1.getDir() + 2);
+	  System.out.println("There is a collision.");
       }
     
 
@@ -202,7 +203,7 @@ public class gamePanel extends JPanel implements MouseListener {
 
     @Override
     protected void paintComponent(Graphics g) {
-	System.out.print(action); //TESTING PURPOSES ONLY
+	//System.out.print(action); //TESTING PURPOSES ONLY
 	super.paintComponent(g);
 	Graphics2D g2d = (Graphics2D) g;
 
@@ -218,17 +219,19 @@ public class gamePanel extends JPanel implements MouseListener {
 	    ball.drawBall(g);
 	}
 
-	/*
+	
 	  for (Ball ball: balls) {
-	  if (ball.getVx() > 0 || ball.getVy() > 0) {
-	  ball.moveBall();
-	  for (Ball ball2: balls) {
-	  if (ball.isCollide(ball2))
-	  collide(ball,ball2);
+	      if (ball.getVx() > 0 || ball.getVy() > 0) {
+		  ball.moveBall();
+		  ball.wall();
+		  for (Ball ball2: balls) {
+		      System.out.println(ball2);
+		      if (ball.isCollide(ball2))
+			  collide(ball,ball2);
+		  }
+	      }
 	  }
-	  }
-	  }
-	*/
+	
 	
 	if (action.equals("turning")) {
 	    //rotating the stick around the cue ball 

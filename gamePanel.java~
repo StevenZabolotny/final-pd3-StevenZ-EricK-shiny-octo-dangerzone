@@ -25,6 +25,7 @@ public class gamePanel extends JPanel implements MouseListener {
     double t = 0.0; 
     boolean transition,firstcall;
     double releasevar = 9.1; //needs to start above 9
+    double lastdx = 0,lastdy = 0;
     
     public gamePanel() {
 	setOpaque(true);
@@ -37,6 +38,7 @@ public class gamePanel extends JPanel implements MouseListener {
 			transition = true;
 		    if (action.equals("released") && (releasevar <= 9)) {
 			t = 0.0;
+			balls.get(0).setMov(true);
 			action = "hit";
 		    }
 		    Point p = e.getPoint();
@@ -360,11 +362,21 @@ public class gamePanel extends JPanel implements MouseListener {
 	    double d = (mstick/mcue)*t*Math.pow((2*astick*dstickball),0.5)-0.5*(65*mukt*grav/mcue)*t*t; //the conglomeration of a ton of kinematics and momentum (the 65 is there because it seems to work well)
 	    double dx = d*Math.cos(theta+Math.PI);
 	    double dy = d*Math.sin(theta+Math.PI);
-	    System.out.println("X: "+dx+", Y: "+dy);
-	    
+
 	    Ball cueball = balls.get(0);
-	    cueball.setX((int)(cuerx+dx-9));
-	    cueball.setY((int)(cuery+dy-9));
+	    
+	    if ((Math.abs(dx-lastdx) + Math.abs(dy-lastdy) < 0.7) && (Math.abs(dx-cuerx+9) + Math.abs(dy-cuery+9) > 5)) { //if the ball hasn't moved much and isn't at the start
+		cueball.setMov(false);
+		//ball stopped, transition into new turn if all other balls are stopped
+	    }
+	    else {
+		if (cueball.getMov() == true) {
+		    cueball.setX((int)(cuerx+dx-9));
+		    cueball.setY((int)(cuery+dy-9));
+		    lastdx = dx;
+		    lastdy = dy;
+		}
+	    }
 	}
     }
     
