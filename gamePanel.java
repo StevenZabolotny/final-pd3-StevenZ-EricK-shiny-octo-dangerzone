@@ -102,11 +102,11 @@ public class gamePanel extends JPanel implements MouseListener {
 	    cue.setVy(vy * -1);
 	else
 	    cue.setVy(vy);
-	if (x <= 0 && y <= 0)
+	if (x <= 305 && y <= 207)
 	    cue.setDir(1);
-	else if (x > 0 && y <= 0)
+	else if (x > 305 && y <= 207)
 	    cue.setDir(2);
-	else if (x > 0 && y > 0)
+	else if (x > 305 && y > 207)
 	    cue.setDir(3);
 	else
 	    cue.setDir(4);
