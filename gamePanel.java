@@ -238,7 +238,7 @@ public class gamePanel extends JPanel implements MouseListener {
 		System.out.print("B");
 		ball.moveBall();
 		ball.wall();
-		ball.pocket();
+		//ball.pocket();
 		for (Ball ball2: balls) {
 		    System.out.print("C");
 		    System.out.println(ball2);
