@@ -39,7 +39,7 @@ public class Ball {
     public double getVy() {
 	return vy;
     }
-    public int getD() {
+    public int getDir() {
 	return dir;
     }
     public void setVx(double x) {
@@ -87,9 +87,12 @@ public class Ball {
 	else {
 	    g.setColor(new Color(R,G,B));
 	    g.fillOval((int)xpos,(int)ypos,18,18);
-	}
-	vx = vx - 10;
-	vy = vy - 10;
-	*/
+	    } */
+	vx = vx - 5;
+	vy = vy - 5;
+    }
+
+    public boolean isCollide(Ball b) {
+	return ((b.getX() - x <= 18 || b.getX() - x >= -18) && (b.getY() - y <= 18 || b.getY() - y >= -18));
     }
 }

@@ -92,12 +92,12 @@ public class gamePanel extends JPanel implements MouseListener {
 
     public void hit() {
 	Ball cue = balls.get(0);
-	double vx = cue.getX() - x;
+	double vx = (cue.getX() - x) / 2;
 	if (vx < 0)
 	    cue.setVx(vx * -1);
 	else
 	    cue.setVx(vx);
-	double vy = cue.getY() - y;
+	double vy = (cue.getY() - y) / 2;
 	if (vy < 0)
 	    cue.setVy(vy * -1);
 	else
@@ -110,6 +110,29 @@ public class gamePanel extends JPanel implements MouseListener {
 	    cue.setDir(3);
 	else
 	    cue.setDir(4);
+    }
+
+    public void collide(Ball b1, Ball b2) {
+	double vx2 = (b2.getX() - b1.getX());
+	if (vx2 < 0)
+	    vx2 = vx2 * -1;
+	double vy2 = (b2.getY() - b1.getY());
+	if (vy2 < 0)
+	    vy2 = vy2 * -1;
+	double dif = Math.max(b1.getVx() / 4,b2.getVy() / 4) - Math.max(vx2,vy2);
+	if (dif < 0)
+	    dif = dif * -1;
+	vx2 = vx2 + dif;
+	vy2 = vy2 + dif;
+	b1.setVx(b1.getVx() / 2);
+	b1.setVy(b1.getVy() / 2);
+	b2.setVx(vx2);
+	b2.setVy(vy2);
+	b2.setDir(b1.getDir());
+	if (b1.getDir() > 2)
+	    b1.setDir(b1.getDir() - 2);
+	else
+	    b1.setDir(b1.getDir() + 2);
     }
     
     public double angletoCue() {
@@ -186,9 +209,14 @@ public class gamePanel extends JPanel implements MouseListener {
 	    ball.drawBall(g);
 	}
 
-	if (balls.get(0).getVx() > 0 || balls.get(0).getVy() > 0) {
-	    Ball b = balls.get(0);
-	    b.moveBall();
+	for (Ball ball: balls) {
+	    if (ball.getVx() > 0 || ball.getVy() > 0) {
+		ball.moveBall();
+		for (Ball ball2: balls) {
+		    if (ball.isCollide(ball2))
+			collide(ball,ball2);
+		}
+	    }
 	}
 
 	if (action.equals("turning")) {
