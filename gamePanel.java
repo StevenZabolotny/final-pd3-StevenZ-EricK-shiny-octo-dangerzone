@@ -215,6 +215,18 @@ public class gamePanel extends JPanel implements MouseListener {
 	g.fillRect(0,412,864,20);
 	g.setColor(Color.BLACK);
 	g.fillRect(844,0,20,432);
+	g.setColor(Color.WHITE);
+	g.fillOval(8,8,24,24);
+	g.setColor(Color.WHITE);
+	g.fillOval(832,400,24,24);
+	g.setColor(Color.WHITE);
+	g.fillOval(832,8,24,24);
+	g.setColor(Color.WHITE);
+	g.fillOval(8,400,24,24);
+	g.setColor(Color.WHITE);
+	g.fillOval(424,8,24,24);
+	g.setColor(Color.WHITE);
+	g.fillOval(424,400,24,24);
 	for (Ball ball: balls) {
 	    ball.drawBall(g);
 	}
@@ -226,6 +238,7 @@ public class gamePanel extends JPanel implements MouseListener {
 		System.out.print("B");
 		ball.moveBall();
 		ball.wall();
+		ball.pocket();
 		for (Ball ball2: balls) {
 		    System.out.print("C");
 		    System.out.println(ball2);
