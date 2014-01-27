@@ -68,6 +68,7 @@ public class Final2 implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 	if(e.getSource() == newGameButton) {
+	    //gamePanel.setAction("turning"); //why does this give an error?
 	}
     }
 

@@ -46,7 +46,7 @@ public class Final2 implements ActionListener {
 	buttonPanel = new JPanel();
 	buttonPanel.setLayout(new FlowLayout());
 	buttonPanel.setLocation(900,40);
-	buttonPanel.setSize(200,40);
+	buttonPanel.setSize(200,400);
 	totalGUI.add(buttonPanel);
 	turnLabel = new JLabel("" + turn);
 	turnLabel.setHorizontalAlignment(0);

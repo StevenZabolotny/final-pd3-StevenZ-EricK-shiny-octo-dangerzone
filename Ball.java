@@ -10,8 +10,8 @@ public class Ball {
     private int rx,ry,r;
     private int n,R,G,B;
     private double vx,vy;
-    private int dir;
-    private boolean striped;
+    private int dir,dirx,diry;
+    private boolean striped,collided,wallescape;
     private int t;
     
     public Ball(int x,int y,int n,int R,int G,int B,boolean striped) {
@@ -25,6 +25,7 @@ public class Ball {
 	this.G = G;
 	this.B = B;
 	this.striped = striped;
+	this.wallescape = true;
     }
 
     public double getX() {
@@ -51,6 +52,12 @@ public class Ball {
     public void setDir(int x) {
 	dir = x;
     }
+    public void setCol(boolean x) {
+	collided = x;
+    }
+    public boolean getCol() {
+	return collided;
+    }
 
     public void drawBall(Graphics g) {
 	if (striped) {
@@ -66,17 +73,14 @@ public class Ball {
     }
 
     public void moveBall() {
-	if (t % 15 == 0) {
-	    int dirx = -1;
-	    int diry = -1;
-	    if (dir == 3 || dir == 2)
-		dirx = 1;
-	    if (dir > 2)
-		diry = 1;
-	    x = x + (int)(vx * dirx);
-	    y = y + (int)(vy * diry);
-	}
-	t = t + 1;
+	dirx = -1;
+	diry = -1;
+	if (dir == 3 || dir == 2)
+	    dirx = 1;
+	if (dir > 2)
+	    diry = 1;
+	x = x + (int)(vx * dirx / 10);
+	y = y + (int)(vy * diry / 10);
 	/*
 	if (striped) {
 	    g.setColor(Color.WHITE);
@@ -90,9 +94,37 @@ public class Ball {
 	    } */
 	vx = vx - 5;
 	vy = vy - 5;
+	collided = false;
     }
 
     public boolean isCollide(Ball b) {
-	return ((b.getX() - x <= 18 || b.getX() - x >= -18) && (b.getY() - y <= 18 || b.getY() - y >= -18));
+	double difx = b.getX() - x;
+	double dify = b.getY() - y;
+	if (difx < 0) 
+	    difx = difx * -1;
+	if (dify < 0)
+	    dify = dify * -1;
+	return ((difx <= 18) && (dify <= 18) && !collided);
+    }
+
+    public void wall() {
+	if (wallescape) {
+	    if (x <= 29 || x >= 835) {
+		vx = vx * 0.75;
+		vy = vy * 0.75;
+		dirx = dirx * -1;
+		collided = true;
+	    }
+	    if (y <= 29 || y >= 403) {
+		vx = vx * 0.75;
+		vy = vy * 0.75;
+		diry = diry * -1;
+		collided = true;
+	    }
+	}
+	if ((x <= 29 || x >= 835) || (y <= 29 || y >= 403))
+	    wallescape = false;
+	else
+	    wallescape = true;
     }
 }

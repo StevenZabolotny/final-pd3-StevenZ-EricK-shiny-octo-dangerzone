@@ -133,6 +133,8 @@ public class gamePanel extends JPanel implements MouseListener {
 	    b1.setDir(b1.getDir() - 2);
 	else
 	    b1.setDir(b1.getDir() + 2);
+	b1.setCol(true);
+	b2.setCol(true);
     }
     
     public double angletoCue() {
@@ -212,6 +214,7 @@ public class gamePanel extends JPanel implements MouseListener {
 	for (Ball ball: balls) {
 	    if (ball.getVx() > 0 || ball.getVy() > 0) {
 		ball.moveBall();
+		ball.wall();
 		for (Ball ball2: balls) {
 		    if (ball.isCollide(ball2))
 			collide(ball,ball2);
