@@ -61,8 +61,8 @@ public class gamePanel extends JPanel implements MouseListener {
 	if (action.equals("turning")) {
 	    transition = false;
 	    //when the stick is rotating around the ball and the mouse is pressed
-	    cuerx = balls.get(0).getX()+9;
-	    cuery = balls.get(0).getY()+9;
+	    cuerx = (int)balls.get(0).getX()+9;
+	    cuery = (int)balls.get(0).getY()+9;
 	    int xdis = Math.abs(x - cuerx);
 	    int ydis = Math.abs(y - cuery);
 	    if ((Math.pow(xdis,2) + Math.pow(ydis,2)) < 25281) { //100 px circle around the ball 
