@@ -120,17 +120,17 @@ public class gamePanel extends JPanel implements MouseListener {
     */
    
       public void collide(Ball b1, Ball b2) {
-	  double vx2 = (b2.getX() - b1.getX());
+	  double vx2 = (b2.getrX() - b1.getrX());
 	  if (vx2 < 0)
 	      vx2 = vx2 * -1;
-	  double vy2 = (b2.getY() - b1.getY());
+	  double vy2 = (b2.getrY() - b1.getrY());
 	  if (vy2 < 0)
 	      vy2 = vy2 * -1;
-	  double dif = Math.max(b1.getVx() / 4,b2.getVy() / 4) - Math.max(vx2,vy2);
+	  double dif = Math.max(b1.getVx(),b2.getVy()) - Math.max(vx2,vy2);
 	  if (dif < 0)
 	      dif = dif * -1;
-	  vx2 = vx2 + dif;
-	  vy2 = vy2 + dif;
+	  vx2 = vx2 + dif * 1.25;
+	  vy2 = vy2 + dif * 1.25;
 	  b1.setVx(b1.getVx() / 2);
 	  b1.setVy(b1.getVy() / 2);
 	  b2.setVx(vx2);

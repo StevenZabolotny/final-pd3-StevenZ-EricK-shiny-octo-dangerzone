@@ -219,15 +219,18 @@ public class gamePanel extends JPanel implements MouseListener {
 	    ball.drawBall(g);
 	}
 
-	
-	  for (Ball ball: balls) {
-	      if (ball.getVx() > 0 || ball.getVy() > 0) {
-		  ball.moveBall();
-		  ball.wall();
-		  for (Ball ball2: balls) {
-		      System.out.println(ball2);
-		      if (ball.isCollide(ball2))
-			  collide(ball,ball2);
+       
+	for (Ball ball: balls) {
+	    System.out.print("A");
+	    if (ball.getVx() > 0 || ball.getVy() > 0) {
+		System.out.print("B");
+		ball.moveBall();
+		ball.wall();
+		for (Ball ball2: balls) {
+		    System.out.print("C");
+		    System.out.println(ball2);
+		    if (ball.isCollide(ball2))
+			collide(ball,ball2);
 		  }
 	      }
 	  }
@@ -376,6 +379,8 @@ public class gamePanel extends JPanel implements MouseListener {
 		if (cueball.getMov() == true) {
 		    cueball.setX((int)(cuerx+dx-9));
 		    cueball.setY((int)(cuery+dy-9));
+		    cueball.setVx(dx-lastdx);
+		    cueball.setVy(dy-lastdy);
 		    lastdx = dx;
 		    lastdy = dy;
 		}

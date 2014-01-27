@@ -35,6 +35,12 @@ public class Ball {
     public double getY() {
 	return (double)y;
     }
+    public double getrX() {
+	return (double)rx;
+    }
+    public double getrY() {
+	return (double)ry;
+    }
     public void setX(int xi) {
 	x = xi;
     }
@@ -95,6 +101,8 @@ public class Ball {
 	    diry = 1;
 	x = x + (int)(vx * dirx / 10);
 	y = y + (int)(vy * diry / 10);
+	rx = x + 9;
+	ry = y + 9;
 	/*
 	if (striped) {
 	    g.setColor(Color.WHITE);
@@ -112,8 +120,8 @@ public class Ball {
     }
 
     public boolean isCollide(Ball b) {
-	double difx = b.getX() - x;
-	double dify = b.getY() - y;
+	double difx = b.getrX() - rx;
+	double dify = b.getrY() - ry;
 	if (difx < 0) 
 	    difx = difx * -1;
 	if (dify < 0)
@@ -123,20 +131,20 @@ public class Ball {
 
     public void wall() {
 	if (wallescape) {
-	    if (x <= 29 || x >= 835) {
+	    if (rx <= 29 || rx >= 835) {
 		vx = vx * 0.75;
 		vy = vy * 0.75;
 		dirx = dirx * -1;
 		collided = true;
 	    }
-	    if (y <= 29 || y >= 403) {
+	    if (ry <= 29 || ry >= 403) {
 		vx = vx * 0.75;
 		vy = vy * 0.75;
 		diry = diry * -1;
 		collided = true;
 	    }
 	}
-	if ((x <= 29 || x >= 835) || (y <= 29 || y >= 403))
+	if ((rx <= 29 || rx >= 835) || (ry <= 29 || ry >= 403))
 	    wallescape = false;
 	else
 	    wallescape = true;

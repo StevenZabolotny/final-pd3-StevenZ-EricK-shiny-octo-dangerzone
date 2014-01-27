@@ -118,7 +118,7 @@ public class Ball {
 	    difx = difx * -1;
 	if (dify < 0)
 	    dify = dify * -1;
-	return ((difx <= 18) && (dify <= 18) && !collided);
+	return ((difx <= 18) && (dify <= 18 && !collided));
     }
 
     public void wall() {
